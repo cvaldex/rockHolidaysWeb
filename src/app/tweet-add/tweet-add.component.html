@@ -1,0 +1,31 @@
+<div>
+    <h2>Tweet Add</h2>
+    <div class="container content">
+        <div class="row">
+            <div class="col-xs-1" align="center">
+                <label>Text:
+                    <textarea [(ngModel)]="tweetData.text" ng-maxlength="265"></textarea>
+                </label>
+            </div>
+        </div>
+        <label>Date:
+            <input [(ngModel)]="tweetData.date" placeholder="Date"/>
+        </label><br>
+        <label>Author:
+            <input [(ngModel)]="tweetData.author" placeholder="Author"/>
+        </label><br>
+        <label>Image 1:
+            <input type="file" (change)="handleFileInput($event.target.files , 1)">
+        </label><br>
+        <label>Image 2:
+            <input type="file" (change)="handleFileInput($event.target.files , 2)">
+        </label><br>
+        <label>Image 3:
+            <input type="file" (change)="handleFileInput($event.target.files , 3)">
+        </label><br>
+        <label>Image 4:
+            <input type="file" (change)="handleFileInput($event.target.files , 4)">
+        </label><br>
+    </div>
+    <button (click)="addTweet()">Save</button>
+</div>

@@ -1,31 +1,41 @@
-<div>
-    <h2>Tweet Add</h2>
-    <div class="container content">
-        <div class="row">
-            <div class="col-xs-1" align="center">
-                <label>Text:
-                    <textarea [(ngModel)]="tweetData.text" ng-maxlength="265"></textarea>
-                </label>
-            </div>
+<div class="container">
+    <h2>Agregar Tweet</h2>
+    <form>
+        <div class="form-group">
+            <label class="col-form-label">Tweet:</label>
+            <textarea [(ngModel)]="tweetData.text" name="tweetData.text" maxlength="265" ng-trim="false" class="form-control" rows="7"></textarea>
+            <small id="emailHelp" class="form-text text-muted">{{265 - tweetData.text.length}} restantes</small>
         </div>
-        <label>Date:
-            <input [(ngModel)]="tweetData.date" placeholder="Date"/>
-        </label><br>
-        <label>Author:
-            <input [(ngModel)]="tweetData.author" placeholder="Author"/>
-        </label><br>
-        <label>Image 1:
-            <input type="file" (change)="handleFileInput($event.target.files , 1)">
-        </label><br>
-        <label>Image 2:
-            <input type="file" (change)="handleFileInput($event.target.files , 2)">
-        </label><br>
-        <label>Image 3:
-            <input type="file" (change)="handleFileInput($event.target.files , 3)">
-        </label><br>
-        <label>Image 4:
-            <input type="file" (change)="handleFileInput($event.target.files , 4)">
-        </label><br>
-    </div>
-    <button (click)="addTweet()">Save</button>
+
+        <div class="form-group">
+            <label class="col-form-label">Fecha:</label>
+            <input [(ngModel)]="tweetData.date" name="tweetData.date" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label">Imagen 1:</label>
+            <input type="file" id="image1" (change)="handleFileInput($event.target.files , 1)">
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label">Imagen 2:</label>
+            <input type="file" id="image2" (change)="handleFileInput($event.target.files , 2)">
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label">Imagen 3:</label>
+            <input type="file" id="image3" (change)="handleFileInput($event.target.files , 3)">
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label">Imagen 4:</label>
+            <input type="file" id="image4" (change)="handleFileInput($event.target.files , 4)">
+        </div>
+
+        <div class="form-group">
+        <!--div class="mx-auto"-->
+            <button (click)="addTweet()" class="custom-file-input" type="button" class="btn btn-primary btn-lg btn-block">Guardar Tweet</button>
+        <!--/div-->
+        </div>
+    </form>
 </div>

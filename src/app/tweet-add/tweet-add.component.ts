@@ -17,8 +17,9 @@ export class TweetAddComponent implements OnInit {
     ngOnInit() {}
 
     addTweet() {
+        this.tweetData.author = 'cvaldex@gmail.com';
         this.tweet.addTweet(this.tweetData).subscribe((result) => {
-            this.router.navigate(['/tweet-details/'+result._id]);
+            this.router.navigate(['/tweet-added/'+result._id]);
         }, (err) => {
             console.log(err);
         });
@@ -31,28 +32,13 @@ export class TweetAddComponent implements OnInit {
         let reader = new FileReader();
         reader.readAsDataURL(this.fileToUpload);
         reader.onload = () => {
-            console.log("File readead!!" + reader.result);
+            //console.log("File readead!!" + reader.result);
             switch(imageId) {
-                case 1: this.tweetData.image1 = reader.result.split(",")[1];
-                case 2: this.tweetData.image2 = reader.result.split(",")[1];
-                case 3: this.tweetData.image3 = reader.result.split(",")[1];
-                case 4: this.tweetData.image4 = reader.result.split(",")[1];
+                case 1: this.tweetData.image1 = reader.result.toString().split(",")[1]; break;
+                case 2: this.tweetData.image2 = reader.result.toString().split(",")[1]; break;
+                case 3: this.tweetData.image3 = reader.result.toString().split(",")[1]; break;
+                case 4: this.tweetData.image4 = reader.result.toString().split(",")[1]; break;
             }
         }
-        /*this.printMessage(1);
-        this.printMessage(2);
-        this.printMessage(3);
-        this.printMessage(4);*/
     }
-
-    /*
-    printMessage(id: number){
-        switch(id) {
-            case 1: console.log("Output 1"); break;
-            case 2: console.log("Output 2"); break;
-            case 3: console.log("Output 3"); break;
-            case 4: console.log("Output 4"); break;
-        }
-    }
-    */
 }

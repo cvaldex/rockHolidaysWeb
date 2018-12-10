@@ -19,14 +19,15 @@ export class TweetAddComponent implements OnInit {
     addTweet() {
         this.tweetData.author = 'cvaldex@gmail.com';
         this.tweet.addTweet(this.tweetData).subscribe((result) => {
-            this.router.navigate(['/tweet-added/'+result._id]);
+            console.log(result);
+            this.router.navigate(['/tweet-add-success/'+result.id]);
         }, (err) => {
             console.log(err);
         });
     }
 
     handleFileInput(files: FileList , imageId: number) {
-        console.log("handleFileInput");
+        //console.log("handleFileInput");
         this.fileToUpload = files.item(0);
 
         let reader = new FileReader();

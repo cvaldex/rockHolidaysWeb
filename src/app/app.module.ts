@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TweetComponent } from './tweet/tweet.component';
 import { TweetAddComponent } from './tweet-add/tweet-add.component';
+import { TweetAddSuccessComponent } from './tweet-add-success/tweet-add-success.component';
 
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -16,17 +17,18 @@ const appRoutes: Routes = [
     path: 'products',
     component: ProductComponent,
     data: { title: 'Product List' }
+  },*/
+  {
+      path: 'tweet-add-success/:id',
+      component: TweetAddSuccessComponent,
+      data: { title: 'Tweet Added Succesfully' }
   },
   {
-    path: 'product-details/:id',
-    component: ProductDetailComponent,
-    data: { title: 'Product Details' }
-},*/
-  {
-    path: 'tweet-add',
-    component: TweetAddComponent,
-    data: { title: 'Tweet Add' }
-} /*,
+      path: 'tweet-add',
+      component: TweetAddComponent,
+      data: { title: 'Tweet Add' }
+  }
+   /*,
   {
     path: 'product-edit/:id',
     component: ProductEditComponent,
@@ -42,7 +44,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     TweetComponent,
-    TweetAddComponent
+    TweetAddComponent,
+    TweetAddSuccessComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

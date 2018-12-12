@@ -62,3 +62,6 @@ typings/
 
 #dir folder
 /dist
+
+#Script Files
+*.sh

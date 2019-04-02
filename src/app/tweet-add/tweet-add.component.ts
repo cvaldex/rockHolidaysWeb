@@ -11,8 +11,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TweetAddComponent implements OnInit {
     fileToUpload: File = null;
     reader: FileReader[]  = [];
+    MAX_FILE_SIZE: Number = 5242880;
 
-    @Input() tweetData = { text:'', date: '', author: '', image1: '', image2: '', image3: '', image4: '' };
+    @Input() tweetData = { text:'', date: '', author: '', priority: '', image1: '', image2: '', image3: '', image4: '' };
 
     constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router) { }
 
@@ -51,20 +52,60 @@ export class TweetAddComponent implements OnInit {
         }
     }*/
 
+    compareFilesByLastModified(a, b) {
+        if (a.lastModified < b.lastModified) {
+            return -1; console.log("a < b")
+        }
+        if (a.lastModified > b.lastModified) {
+            return 1;console.log("a > b")
+        }
+        console.log("a = b")
+        return 0;
+    }
+
     handleMultipleFileInput(files: FileList) {
         console.log("handleFileInput: File set length: " + files.length);
+
+        var orderFileList = [];
+
+        /*
+        for (var i = 0; i < files.length; i++) {
+            if(files.item(i).size >= this.MAX_FILE_SIZE){
+                //var errorDiv = angular.element(document.getElementById("errorLabel"));
+                //errorDiv.class = "visible";
+                return false;
+            }
+        }
+        */
+
+        for (var i = 0; i < files.length; i++) {
+            orderFileList.push(i);
+        }
+
+        //Burbuja para ordenar los archivos por fecha de ultima modificación
+        var tmpIndex;
+        for (var i = 0; i < files.length-1; i++) {
+            if(files.item(i).lastModified > files.item(i+1).lastModified){
+                tmpIndex = orderFileList[i];
+                orderFileList[i] = orderFileList[i+1];
+                orderFileList[i+1] = tmpIndex;
+            }
+        }
+
+        console.log("Ordenado OK:" + orderFileList);
 
         //inicializar el arreglo con 4 elementos vacíos siempre
         this.initFileArray();
 
         for (var i = 0; i < files.length; i++) {
-            console.log("index: " + i)
+            //console.log("index: " + i)
 
             this.reader[i].onload = function(e){
                 console.log("File readead!!");
             }
 
-            this.reader[i].readAsDataURL(files.item(i));
+            //console.log("Leyendo:" + orderFileList[i])
+            this.reader[i].readAsDataURL(files.item(orderFileList[i]));
         }
     }
 

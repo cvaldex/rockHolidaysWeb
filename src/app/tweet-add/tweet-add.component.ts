@@ -11,16 +11,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TweetAddComponent implements OnInit {
     fileToUpload: File = null;
     reader: FileReader[]  = [];
+    someError: Boolean = false;
+    wrongImageName = "";
     MAX_FILE_SIZE: Number = 5242880;
+    public priorities:Array<string> = ['0', '1', '2', '3', '4'];
 
     @Input() tweetData = { text:'', date: '', author: '', priority: '', image1: '', image2: '', image3: '', image4: '' };
 
     constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router) { }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.tweetData.priority='2'; //default para el option
+        this.tweetData.author = 'cvaldex@gmail.com';
+    }
 
     addTweet() {
-        this.tweetData.author = 'cvaldex@gmail.com';
+
 
         this.tweetData.image1 = this.getFileContent(this.reader[0]);
         this.tweetData.image2 = this.getFileContent(this.reader[1]);
@@ -35,48 +41,22 @@ export class TweetAddComponent implements OnInit {
         });
     }
 
-    /*handleFileInput(files: FileList , imageId: number) {
-        console.log("handleFileInput: Largo arreglo archivos: " + files.length);
-        this.fileToUpload = files.item(0);
-
-        let reader = new FileReader();
-        reader.readAsDataURL(this.fileToUpload);
-        reader.onload = () => {
-            //console.log("File readead!!" + reader.result);
-            switch(imageId) {
-                case 1: this.tweetData.image1 = reader.result.toString().split(",")[1]; break;
-                case 2: this.tweetData.image2 = reader.result.toString().split(",")[1]; break;
-                case 3: this.tweetData.image3 = reader.result.toString().split(",")[1]; break;
-                case 4: this.tweetData.image4 = reader.result.toString().split(",")[1]; break;
-            }
-        }
-    }*/
-
-    compareFilesByLastModified(a, b) {
-        if (a.lastModified < b.lastModified) {
-            return -1; console.log("a < b")
-        }
-        if (a.lastModified > b.lastModified) {
-            return 1;console.log("a > b")
-        }
-        console.log("a = b")
-        return 0;
-    }
-
     handleMultipleFileInput(files: FileList) {
         console.log("handleFileInput: File set length: " + files.length);
 
+        //Validar que el peso de los archivos es el correcto
         var orderFileList = [];
+        this.someError = false; //resetear para ocultar el label de error
 
-        /*
         for (var i = 0; i < files.length; i++) {
-            if(files.item(i).size >= this.MAX_FILE_SIZE){
-                //var errorDiv = angular.element(document.getElementById("errorLabel"));
-                //errorDiv.class = "visible";
+            if(files.item(i).size >= this.MAX_FILE_SIZE){ //si es mayo que el peso máximo, no continuar el proceso
+                this.someError = true;
+                this.wrongImageName = files.item(i).name;
+
                 return false;
             }
         }
-        */
+
 
         for (var i = 0; i < files.length; i++) {
             orderFileList.push(i);
@@ -92,19 +72,14 @@ export class TweetAddComponent implements OnInit {
             }
         }
 
-        console.log("Ordenado OK:" + orderFileList);
-
         //inicializar el arreglo con 4 elementos vacíos siempre
         this.initFileArray();
 
         for (var i = 0; i < files.length; i++) {
-            //console.log("index: " + i)
-
             this.reader[i].onload = function(e){
                 console.log("File readead!!");
             }
 
-            //console.log("Leyendo:" + orderFileList[i])
             this.reader[i].readAsDataURL(files.item(orderFileList[i]));
         }
     }

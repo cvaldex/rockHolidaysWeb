@@ -15,41 +15,25 @@
         <div class="form-group">
             <label class="col-form-label">Prioridad:</label>
             <select [(ngModel)]="tweetData.priority" name="tweetData.priority" class="form-control">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+
+                <option [value]="priority" *ngFor="let priority of priorities">{{priority}}</option>
             </select>
+
         </div>
 
         <div class="form-group">
             <label class="col-form-label">Imágenes:</label>
             <input type="file" id="imagenes" (change)="handleMultipleFileInput($event.target.files)" multiple>
-            <div class="invisible" id="errorLabel">
-                <div class="alert alert-danger" role="alert">
-                  La imagen XXX es muy pesada para ser cargada
+
+            <div class="animate-show-hide" *ngIf="someError">
+                <div class="alert alert-danger"  role="alert">
+                  La imagen "{{ wrongImageName }}" es muy pesada para ser cargada
                 </div>
             </div>
         </div>
 
-        <!--
         <div class="form-group">
-            <label class="col-form-label">Imagen 2:</label>
-            <input type="file" id="image2" (change)="handleFileInput($event.target.files , 2)">
-        </div>
-
-        <div class="form-group">
-            <label class="col-form-label">Imagen 3:</label>
-            <input type="file" id="image3" (change)="handleFileInput($event.target.files , 3)">
-        </div>
-
-        <div class="form-group">
-            <label class="col-form-label">Imagen 4:</label>
-            <input type="file" id="image4" (change)="handleFileInput($event.target.files , 4)">
-        </div>
-        -->
-        <div class="form-group">
-            <button (click)="addTweet()" class="custom-file-input" type="button" class="btn btn-primary btn-lg btn-block">Guardar Tweet</button>
+            <button (click)="addTweet()" class="custom-file-input" type="button" class="btn btn-primary btn-lg btn-block" [disabled]="someError">Guardar Tweet</button>
         </div>
     </form>
 </div>

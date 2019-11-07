@@ -12,12 +12,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule , FormBuilder } from '@angular/forms';
 
 const appRoutes: Routes = [
-/*
-  {
-    path: 'products',
-    component: ProductComponent,
-    data: { title: 'Product List' }
-  },*/
   {
       path: 'tweet-add-success/:id',
       component: TweetAddSuccessComponent,
@@ -28,16 +22,6 @@ const appRoutes: Routes = [
       component: TweetAddComponent,
       data: { title: 'Tweet Add' }
   }
-   /*,
-  {
-    path: 'product-edit/:id',
-    component: ProductEditComponent,
-    data: { title: 'Product Edit' }
-  },
-  { path: '',
-    redirectTo: '/products',
-    pathMatch: 'full'
-}*/
 ];
 
 @NgModule({

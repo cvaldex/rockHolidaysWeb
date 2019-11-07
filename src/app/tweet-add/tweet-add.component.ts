@@ -12,7 +12,7 @@ export class TweetAddComponent implements OnInit {
     fileToUpload: File = null;
     reader: FileReader[]  = [];
     someError: Boolean = false;
-    wrongImageName = "";
+    errorMessage = "";
     MAX_FILE_SIZE: Number = 5242880;
     public priorities:Array<string> = ['0', '1', '2', '3', '4'];
 
@@ -26,18 +26,18 @@ export class TweetAddComponent implements OnInit {
     }
 
     addTweet() {
-
-
         this.tweetData.image1 = this.getFileContent(this.reader[0]);
         this.tweetData.image2 = this.getFileContent(this.reader[1]);
         this.tweetData.image3 = this.getFileContent(this.reader[2]);
         this.tweetData.image4 = this.getFileContent(this.reader[3]);
 
         this.tweet.addTweet(this.tweetData).subscribe((result) => {
-            console.log(result);
+            console.log("Result: " + result);
             this.router.navigate(['/tweet-add-success/'+result.id]);
         }, (err) => {
-            console.log(err);
+            console.log("Error--->" + err.message);
+            this.someError = true;
+            this.errorMessage = err.message;
         });
     }
 
@@ -51,7 +51,7 @@ export class TweetAddComponent implements OnInit {
         for (var i = 0; i < files.length; i++) {
             if(files.item(i).size >= this.MAX_FILE_SIZE){ //si es mayo que el peso máximo, no continuar el proceso
                 this.someError = true;
-                this.wrongImageName = files.item(i).name;
+                this.errorMessage = "La imagen \"" + files.item(i).name + "\" es muy pesada para ser cargada";
 
                 return false;
             }

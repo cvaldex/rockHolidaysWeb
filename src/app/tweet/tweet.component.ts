@@ -16,6 +16,7 @@ export class TweetComponent implements OnInit {
 
   ngOnInit() {
     this.add();
+    console.log("Add route added");
   }
 
   /*getTweets() {

@@ -3,9 +3,9 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
-  //const endpoint = 'https://m5oqzn0c6k.execute-api.us-east-1.amazonaws.com/prod/';
-  const endpoint = 'https://ufzauad358.execute-api.us-east-1.amazonaws.com/prod/';
-  //const endpoint = 'https://bad-ufzauad358.execute-api.us-east-1.amazonaws.com/prod/';
+  const addEndpoint = 'https://ufzauad358.execute-api.us-east-1.amazonaws.com/prod/';
+  const publishEndpoint = 'https://bba57yyk8f.execute-api.us-east-1.amazonaws.com/prod/';
+
   const httpOptions = {
       headers: new HttpHeaders({
           'Content-Type':  'application/json'
@@ -26,10 +26,16 @@ import { map, catchError, tap } from 'rxjs/operators';
   }
 
   addTweet (tweet): Observable<any> {
-      console.log(tweet);
-      return this.http.post<any>(endpoint + 'tweet', JSON.stringify(tweet), httpOptions).pipe(
-          tap((tweet) => console.log(`added tweet w/ id=${tweet.id}`)) //,
-          //catchError(this.handleError<any>('addTweet'))
+      console.log("TweetService.addTweet" + tweet);
+      return this.http.post<any>(addEndpoint + 'tweet', JSON.stringify(tweet), httpOptions).pipe(
+          tap((tweet) => console.log(`added tweet w/ id=${tweet.id}`))
+      );
+  }
+
+  publishTweet (tweet): Observable<any> {
+      console.log("TweetService.publishTweet" + tweet);
+      return this.http.post<any>(publishEndpoint + 'publish', JSON.stringify(tweet), httpOptions).pipe(
+          tap((tweet) => console.log(`published tweet w/ id=${tweet.resultsFound}`))
       );
   }
 

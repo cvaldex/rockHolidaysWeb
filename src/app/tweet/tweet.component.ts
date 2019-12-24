@@ -19,26 +19,11 @@ export class TweetComponent implements OnInit {
     console.log("Add route added");
   }
 
-  /*getTweets() {
-    this.products = [];
-    this.rest.getProducts().subscribe((data: {}) => {
-      console.log(data);
-      this.products = data;
-    });
-}*/
-
   add() {
     this.router.navigate(['/tweet-add']);
   }
 
- /* delete(id) {
-    this.rest.deleteProduct(id)
-      .subscribe(res => {
-          this.getProducts();
-        }, (err) => {
-          console.log(err);
-        }
-      );
-  }*/
-
+  publish() {
+    this.router.navigate(['/tweet-publish']);
+  }
 }

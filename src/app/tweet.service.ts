@@ -5,6 +5,7 @@ import { map, catchError, tap } from 'rxjs/operators';
 
   const addEndpoint = 'https://ufzauad358.execute-api.us-east-1.amazonaws.com/prod/';
   const publishEndpoint = 'https://bba57yyk8f.execute-api.us-east-1.amazonaws.com/prod/';
+  const searchTweetByDateEndpoint = 'https://q1ytn80oe2.execute-api.us-east-1.amazonaws.com/prod/';
 
   const httpOptions = {
       headers: new HttpHeaders({
@@ -36,6 +37,13 @@ import { map, catchError, tap } from 'rxjs/operators';
       console.log("TweetService.publishTweet" + tweet);
       return this.http.post<any>(publishEndpoint + 'publish', JSON.stringify(tweet), httpOptions).pipe(
           tap((tweet) => console.log(`published tweet w/ id=${tweet.resultsFound}`))
+      );
+  }
+
+  searchTweetByDate (searchData): Observable<any> {
+      console.log("TweetService.searchTweetByDate" + searchData);
+      return this.http.post<any>(searchTweetByDateEndpoint + 'tweets', JSON.stringify(searchData), httpOptions).pipe(
+          tap((tweet) => console.log(tweet))
       );
   }
 

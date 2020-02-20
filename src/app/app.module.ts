@@ -12,6 +12,10 @@ import { TweetAddSuccessComponent } from './tweet-add-success/tweet-add-success.
 import { TweetPublishComponent } from './tweet-publish/tweet-publish.component';
 import { TweetPublishSuccessComponent } from './tweet-publish-success/tweet-publish-success.component';
 
+import { TweetSearchByDate } from './tweet-search-by-date/tweet-search-by-date.component';
+import { TweetShowGrid } from './tweet-show-grid/tweet-show-grid.component';
+import { TweetSearchByDateHolder } from './tweet-search-by-date-holder/tweet-search-by-date-holder.component';
+
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule , FormBuilder } from '@angular/forms';
 
@@ -35,6 +39,21 @@ const appRoutes: Routes = [
       path: 'tweet-publish-success/:id',
       component: TweetPublishSuccessComponent,
       data: { title: 'Tweet Published Succesfully' }
+  },
+  {
+      path: 'tweet-search-by-date',
+      component: TweetSearchByDate,
+      data: { title: 'Tweet Search By Date' }
+  },
+  {
+      path: 'tweet-show-grid',
+      component: TweetShowGrid,
+      data: { title: 'Tweet Show Grid' }
+  },
+  {
+      path: 'tweet-search-by-date-holder',
+      component: TweetSearchByDateHolder,
+      data: { title: 'Tweet Search By Date Holder' }
   }
 ];
 
@@ -45,7 +64,10 @@ const appRoutes: Routes = [
     TweetAddComponent,
     TweetAddSuccessComponent,
     TweetPublishComponent,
-    TweetPublishSuccessComponent
+    TweetPublishSuccessComponent,
+    TweetSearchByDate,
+    TweetShowGrid,
+    TweetSearchByDateHolder
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

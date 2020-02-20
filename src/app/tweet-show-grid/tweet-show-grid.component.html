@@ -1,0 +1,26 @@
+<div class="container">
+  <h2>Resultado Búsqueda</h2>
+  <p>Cantidad de registros: {{ tweetsLength }}</p>
+<div class="table-responsive">
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Prioridad</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Texto</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tweet of tweets">
+    <td>{{ tweet.id }}</td>
+    <td>{{ tweet.priority }}</td>
+    <td>{{ tweet.eventdate.substring(0,10) | date:'yyyy/MM/dd'}}</td>
+    <!--td>{{ tweet.eventdate.substring(0,10).replace('-', '/', 'ig') }}</td-->
+    <td>{{ tweet.tweet }}</td>
+  </tr>
+  </tbody>
+  </table>
+  </div>
+
+</div>

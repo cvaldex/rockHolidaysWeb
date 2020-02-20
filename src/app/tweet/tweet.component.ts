@@ -26,4 +26,8 @@ export class TweetComponent implements OnInit {
   publish() {
     this.router.navigate(['/tweet-publish']);
   }
+
+  search() {
+    this.router.navigate(['/tweet-search-by-date']);
+  }
 }

@@ -33,11 +33,14 @@ export class TweetSearchByDate implements OnInit {
     searchTweetByDate() {
         if(this.searchData.date.length == 0){
           var today = new Date();
-          this.searchData.date = (today.getMonth() + 1) + "" + today.getDate();
 
-          if(this.searchData.date.length < 4){
-            this.searchData.date = this.searchData.date.padStart(4, "0");
-          }
+          var month: String = (today.getMonth() + 1).toString();
+          var day: String = (today.getDate()).toString();
+
+          month = month.padStart(2, "0");
+          day = day.padStart(2, "0");
+
+          this.searchData.date = month + "" + day;
         }
 
         console.log("Fecha de busqueda: " + this.searchData.date);

@@ -15,6 +15,8 @@ import { TweetPublishSuccessComponent } from './tweet-publish-success/tweet-publ
 import { TweetSearchByDate } from './tweet-search-by-date/tweet-search-by-date.component';
 import { TweetShowGrid } from './tweet-show-grid/tweet-show-grid.component';
 import { TweetSearchByDateHolder } from './tweet-search-by-date-holder/tweet-search-by-date-holder.component';
+import { TweetSearchByText } from './tweet-search-by-text/tweet-search-by-text.component';
+import { TweetSearchByTextHolder } from './tweet-search-by-text-holder/tweet-search-by-text-holder.component';
 
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule , FormBuilder } from '@angular/forms';
@@ -54,6 +56,11 @@ const appRoutes: Routes = [
       path: 'tweet-search-by-date-holder',
       component: TweetSearchByDateHolder,
       data: { title: 'Tweet Search By Date Holder' }
+  },
+  {
+      path: 'tweet-search-by-text-holder',
+      component: TweetSearchByTextHolder,
+      data: { title: 'Tweet Search By Text Holder' }
   }
 ];
 
@@ -67,7 +74,9 @@ const appRoutes: Routes = [
     TweetPublishSuccessComponent,
     TweetSearchByDate,
     TweetShowGrid,
-    TweetSearchByDateHolder
+    TweetSearchByDateHolder,
+    TweetSearchByText,
+    TweetSearchByTextHolder
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

@@ -42,6 +42,15 @@ export class TweetSearchByDate implements OnInit {
 
           this.searchData.date = month + "" + day;
         }
+        else{
+            if(!this.isValidDate(this.searchData.date)){
+                this.someError = true;
+                this.errorMessage = "Fecha ingresada no es válida (ddMM): " + this.searchData.date;
+                return;
+            }
+        }
+
+        this.someError = false; //limpiar mensaje en caso de múltiples búsquedas
 
         console.log("Fecha de busqueda: " + this.searchData.date);
 
@@ -60,4 +69,26 @@ export class TweetSearchByDate implements OnInit {
         console.log("Result pre-send: " + message);
         this.messageService.sendMessage(message);
     }
+
+    isValidDate(date:string): boolean{
+        var validDate: boolean = false;
+
+        var monthLength = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+        if(date.length == 4){
+            var month = parseInt(date.substring(0, 2));
+            var day = parseInt(date.substring(2, 4));
+
+            if(month >= 1 || month <= 12){
+                if(day >= 1 && day <= monthLength[month-1]){
+                    validDate = true;
+                }
+            }
+        }
+
+        console.log("Valid Date? :" + validDate);
+
+        return validDate;
+    }
+
 }

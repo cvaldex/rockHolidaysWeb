@@ -1,49 +1,60 @@
 <div class="container">
-    <h2>Actualizar Tweet</h2>
+    <h2>Actualizar Tweet {{tweetData.id}}</h2>
     <form>
         <div class="form-group">
-            <label class="col-form-label">ID: {{tweetData.id}}</label>
-        </div>
-        <div class="form-group">
             <label class="col-form-label">Tweet:</label>
-            <textarea [(ngModel)]="tweetData.tweet" name="tweetData.tweet" maxlength="265" ng-trim="false" class="form-control" rows="7"></textarea>
+            <textarea [(ngModel)]="tweetData.tweet" name="tweetData.tweet" maxlength="265" ng-trim="false" class="form-control" rows="8"></textarea>
             <small id="emailHelp" class="form-text text-muted">{{265 - tweetData.tweet.length}} restantes</small>
         </div>
 
         <div class="form-group">
-            <label class="col-form-label">Fecha:</label>
-            <input [(ngModel)]="tweetData.eventDate" name="tweetData.eventDate" class="form-control"/>
+            <div class="row">
+                <div class="col-sm">
+                    <label class="col-form-label">Fecha:</label>
+                </div>
+                <div class="col-md">
+                    <input [(ngModel)]="tweetData.eventDate" name="tweetData.eventDate" class="form-control"/>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
-            <label class="col-form-label">Prioridad:</label>
-            <select [(ngModel)]="tweetData.priority" name="tweetData.priority" class="form-control">
-
-                <option [value]="priority" *ngFor="let priority of priorities">{{priority}}</option>
-            </select>
-
+            <div class="row">
+                <div class="col-sm">
+                    <label class="col-form-label">Prioridad:</label>
+                </div>
+                <div class="col-md">
+                    <select [(ngModel)]="tweetData.priority" name="tweetData.priority" class="form-control">
+                        <option [value]="priority" *ngFor="let priority of priorities">{{priority}}</option>
+                    </select> 
+                </div>
+            </div>
         </div>
 
         <!--div class="form-group">
             <label class="col-form-label">Imágenes:</label>
             <input type="file" id="imagenes" (change)="handleMultipleFileInput($event.target.files)" multiple>
         </div-->  
-              
-        <div class="animate-show-hide" *ngIf="someError">
-            <div class="alert alert-danger"  role="alert">
-                {{ errorMessage }}
-            </div>
+
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="someError">
+            Ha ocurrido un error: {{ errorMessage }}
+            <button (click)="hideAlert('error')" type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
         </div>
 
         <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="success">
             Registro {{tweetData.id}} exitosamente actualizado
-            <button (click)="hideAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button (click)="hideAlert('success')" type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
         </div>
         
         <div class="form-group">
-            <button (click)="updateTweet()" class="custom-file-input" type="button" class="btn btn-primary btn-lg btn-block" [disabled]="someError">Actualizar Tweet</button>
+            <button (click)="updateTweet()" class="custom-file-input" type="button" class="btn btn-primary btn-lg btn-block">Actualizar Tweet</button>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary btn-lg btn-block"(click)="close()">Cerrar</button>
         </div>
     </form>
 </div>

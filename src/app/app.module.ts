@@ -22,6 +22,9 @@ import { TweetSearchByTextHolder } from './tweet-search-by-text-holder/tweet-sea
 
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule , FormBuilder } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import {MatDialogModule} from '@angular/material/dialog';
 
 const appRoutes: Routes = [
   {
@@ -90,7 +93,9 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FormsModule,
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    NoopAnimationsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

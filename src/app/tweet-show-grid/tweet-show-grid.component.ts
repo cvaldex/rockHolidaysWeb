@@ -4,8 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
 import { MessageService } from '../services/index';
-import { SingleTweetMessageService } from '../services/index';
 
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+import { TweetUpdateComponent } from '../tweet-update/tweet-update.component';
 
 @Component({
     selector: 'app-show-grid',
@@ -22,7 +24,7 @@ export class TweetShowGrid implements OnInit {
 
     @Input() searchData = { date:''};
 
-    constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private singleTweetMessageService: SingleTweetMessageService) {
+    constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, private messageService: MessageService, public dialog: MatDialog) {
       // subscribe to home component messages
       this.subscription = this.messageService.getMessage().subscribe(message => {
         if (message) {
@@ -41,19 +43,17 @@ export class TweetShowGrid implements OnInit {
       //this.sendMessage(this.tweets[index]);
       sessionStorage.setItem('tweetToUpdate', JSON.stringify(this.tweets[index]));
       //sessionStorage.tweetToUpdate = this.tweets[index];
+      
+      //var tweetToUpdate = ;
+      let dialogRef = this.dialog.open(TweetUpdateComponent, {data: this.tweets[index]});
 
-      this.router.navigate(['/updateTweet']);
+      dialogRef.afterClosed().subscribe(result => {
+        console.log("Dialog cerrado");
+        console.log(this.tweets[index]);
+      });
+
+      
     }
 
-    ngOnInit() {
-        //this.tweetData.priority='2'; //default para el option
-        //this.tweetData.author = 'cvaldex@gmail.com';
-        //this.tweets = Observable.empty<Response>();
-    }
-
-    sendMessage(message:string): void {
-      // send message to subscribers via observable subject
-      console.log("Result pre-send: " + message);
-      this.singleTweetMessageService.sendMessage(message);
-  }
+    ngOnInit() {}
 }

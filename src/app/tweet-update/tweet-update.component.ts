@@ -1,11 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { TweetService } from '../tweet.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Subscription, Observable } from 'rxjs';
-import { SingleTweetMessageService } from '../services/index';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-import {Location} from '@angular/common';
+
 
 @Component({
     selector: 'app-tweet-update',
@@ -18,8 +17,6 @@ export class TweetUpdateComponent implements OnInit {
     reader: FileReader[]  = [];
     MAX_FILE_SIZE: Number = 5242880;
 
-    subscription: Subscription;
-
     someError: Boolean = false;
     success: Boolean = false;
     errorMessage = "";
@@ -28,36 +25,18 @@ export class TweetUpdateComponent implements OnInit {
 
     @Input() tweetData = { id:'', tweet:'', eventDate: '', author: '', priority: '', image1: '', image2: '', image3: '', image4: '' };
 
-    constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, private singleTweetMessageService: SingleTweetMessageService, private location: Location) { 
-        // subscribe to home component messages
-      /*this.subscription = this.singleTweetMessageService.getMessage().subscribe(message => {
-        if (message) {
-          console.log("Mensaje recibido: " + message.tweet.id);
-          console.log(message);
-          this.tweetData.id = message.tweet.id;
-          //this.tweets = message.tweet;
-          //this.tweetsLength = message.tweet.length;
-        } else {}
-      });*/
-    }
+    constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, 
+        public dialogRef: MatDialogRef<TweetUpdateComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() {
-        //this.tweetData.priority='2'; //default para el option
-        //this.tweetData.author = 'cvaldex@gmail.com';
-
-        const tweetToUpdate = JSON.parse(sessionStorage.getItem('tweetToUpdate'));
+        const tweetToUpdate = this.data;//JSON.parse(sessionStorage.getItem('tweetToUpdate'));
 
         console.log("ID a actualizar" + tweetToUpdate.id);
-        //console.log(sessionStorage.tweetToUpdate)
+    
         this.tweetData.id = tweetToUpdate.id.toString();
         this.tweetData.tweet = tweetToUpdate.tweet.trim();
         this.tweetData.eventDate = tweetToUpdate.eventdate.substring(0,10);
         this.tweetData.priority = tweetToUpdate.priority.toString();
-
-        //console.log("ID:" + tweet.id);
-
-        //corregir después
-        //this.tweetData.id = "4216";
     }
 
     updateTweet() {
@@ -67,9 +46,21 @@ export class TweetUpdateComponent implements OnInit {
         this.tweetData.image3 = this.getFileContent(this.reader[2]);
         this.tweetData.image4 = this.getFileContent(this.reader[3]);
         */
+        this.someError = false;
         this.tweet.updateTweet(this.tweetData).subscribe((result) => {
             console.log("Result: " + result);
             this.success = true;
+
+            //actualizar el objeto en sesion que representa al tweet modificado
+            //var updatedTweet;
+            this.data.id = this.tweetData.id;
+            this.data.tweet = this.tweetData.tweet;
+            this.data.eventdate = this.tweetData.eventDate;
+            this.data.priority = this.tweetData.priority;
+
+            //sessionStorage.setItem('tweetToUpdate', JSON.stringify(updatedTweet));
+
+
         }, (err) => {
             console.log("Error--->" + err.message);
             this.someError = true;
@@ -77,9 +68,19 @@ export class TweetUpdateComponent implements OnInit {
         });
     }
 
-    hideAlert(){
-        this.success = false;
-        this.location.back();
+    close() {
+        this.dialogRef.close();
+    }       
+
+    hideAlert(alertType: string){
+        if(alertType == 'success'){
+            this.success = false;
+        }
+        else{
+            if(alertType == 'error'){
+                this.someError = false;
+            }
+        }
     }
 
     handleMultipleFileInput(files: FileList) {

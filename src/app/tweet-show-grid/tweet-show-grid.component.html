@@ -6,18 +6,19 @@
   <thead>
     <tr>
       <th scope="col">ID</th>
+      <th scope="col">Editar</th>
       <th scope="col">Prioridad</th>
       <th scope="col">Fecha</th>
       <th scope="col">Texto</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let tweet of tweets">
+    <tr *ngFor="let tweet of tweets; index as i">
     <td>{{ tweet.id }}</td>
+    <td><img (click)="updateTweet(i)" src="assets/img/edit.png"/></td>
     <td>{{ tweet.priority }}</td>
     <td>{{ tweet.eventdate.substring(0,10) | date:'yyyy/MM/dd'}}</td>
-    <!--td>{{ tweet.eventdate.substring(0,10).replace('-', '/', 'ig') }}</td-->
-    <td>{{ tweet.tweet }}</td>
+    <td>{{ tweet.tweet }} {{i+1}}</td>
   </tr>
   </tbody>
   </table>

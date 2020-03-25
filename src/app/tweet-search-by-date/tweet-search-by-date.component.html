@@ -4,9 +4,11 @@
     <input class="form-control mr-sm-2" [(ngModel)]="searchData.date" name="searchData.date" type="text" placeholder="Formato: MMdd" aria-label="Search">
     <button (click)="searchTweetByDate()" class="btn btn-primary btn-md" type="submit">Buscar</button>
 </form>
+
 <div class="animate-show-hide" *ngIf="someError">
   <div class="alert alert-danger"  role="alert">
     {{ errorMessage }}
   </div>
 </div>
+
 </div>

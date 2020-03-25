@@ -12,6 +12,8 @@ import { TweetAddSuccessComponent } from './tweet-add-success/tweet-add-success.
 import { TweetPublishComponent } from './tweet-publish/tweet-publish.component';
 import { TweetPublishSuccessComponent } from './tweet-publish-success/tweet-publish-success.component';
 
+import { TweetUpdateComponent } from './tweet-update/tweet-update.component';
+
 import { TweetSearchByDate } from './tweet-search-by-date/tweet-search-by-date.component';
 import { TweetShowGrid } from './tweet-show-grid/tweet-show-grid.component';
 import { TweetSearchByDateHolder } from './tweet-search-by-date-holder/tweet-search-by-date-holder.component';
@@ -61,6 +63,11 @@ const appRoutes: Routes = [
       path: 'tweet-search-by-text-holder',
       component: TweetSearchByTextHolder,
       data: { title: 'Tweet Search By Text Holder' }
+  },
+  {
+    path: 'updateTweet',
+    component: TweetUpdateComponent,
+    data: { title: 'Tweet Update Holder' }
   }
 ];
 
@@ -76,7 +83,8 @@ const appRoutes: Routes = [
     TweetShowGrid,
     TweetSearchByDateHolder,
     TweetSearchByText,
-    TweetSearchByTextHolder
+    TweetSearchByTextHolder,
+    TweetUpdateComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

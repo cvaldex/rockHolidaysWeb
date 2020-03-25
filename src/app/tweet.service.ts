@@ -7,6 +7,7 @@ import { map, catchError, tap } from 'rxjs/operators';
   const publishEndpoint = 'https://bba57yyk8f.execute-api.us-east-1.amazonaws.com/prod/';
   const searchTweetByDateEndpoint = 'https://q1ytn80oe2.execute-api.us-east-1.amazonaws.com/prod/';
   const searchTweetBytextEndpoint = 'https://faabpshtoe.execute-api.us-east-1.amazonaws.com/prod/';
+  const updateTweetEndpoint = 'https://jqgrx6olxi.execute-api.us-east-1.amazonaws.com/prod/';
 
   const httpOptions = {
       headers: new HttpHeaders({
@@ -54,6 +55,15 @@ import { map, catchError, tap } from 'rxjs/operators';
           tap((tweet) => console.log(tweet))
       );
   }
+
+    updateTweet (tweet): Observable<any> {
+        console.log("TweetService.updateTweet" + tweet);
+        console.log(tweet);
+        var id = tweet.id;
+        return this.http.put<any>(updateTweetEndpoint + 'tweets', JSON.stringify(tweet), httpOptions).pipe(
+            tap((tweet) => console.log(`updated tweet w/ id=${id}`))
+        );
+    }
 
   private handleError<T> (operation = 'operation', result?: T) {
       return (error: any): Observable<T> => {

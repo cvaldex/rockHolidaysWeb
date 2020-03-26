@@ -8,28 +8,52 @@
         </div>
 
         <div class="form-group">
-            <label class="col-form-label">Fecha:</label>
-            <input [(ngModel)]="tweetData.date" name="tweetData.date" class="form-control"/>
+            <div class="row">
+                <div class="col-sm">
+                    <label class="col-form-label">Fecha:</label>
+                </div>
+                <div class="col-md">
+                    <input [(ngModel)]="tweetData.date" name="tweetData.date" class="form-control"/>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
-            <label class="col-form-label">Prioridad:</label>
-            <select [(ngModel)]="tweetData.priority" name="tweetData.priority" class="form-control">
-
-                <option [value]="priority" *ngFor="let priority of priorities">{{priority}}</option>
-            </select>
-
+            <div class="row">
+                <div class="col-sm">
+                    <label class="col-form-label">Prioridad:</label>
+                </div>
+                <div class="col-md">
+                    <select [(ngModel)]="tweetData.priority" name="tweetData.priority" class="form-control">
+                        <option [value]="priority" *ngFor="let priority of priorities">{{priority}}</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
             <label class="col-form-label">Imágenes:</label>
             <input type="file" id="imagenes" (change)="handleMultipleFileInput($event.target.files)" multiple>
 
-            <div class="animate-show-hide" *ngIf="someError">
+            <!--div class="animate-show-hide" *ngIf="someError">
                 <div class="alert alert-danger"  role="alert">
                   {{ errorMessage }}
                 </div>
-            </div>
+            </div-->
+        </div>
+
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="someError">
+            Ha ocurrido un error: {{ errorMessage }}
+            <button (click)="hideAlert('error')" type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="success">
+            Registro {{tweetId}} exitosamente ingresado
+            <button (click)="hideAlert('success')" type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
         </div>
 
         <div class="form-group">

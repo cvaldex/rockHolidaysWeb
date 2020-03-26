@@ -4,8 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-
-
 @Component({
     selector: 'app-tweet-update',
     templateUrl: './tweet-update.component.html',
@@ -52,15 +50,10 @@ export class TweetUpdateComponent implements OnInit {
             this.success = true;
 
             //actualizar el objeto en sesion que representa al tweet modificado
-            //var updatedTweet;
             this.data.id = this.tweetData.id;
             this.data.tweet = this.tweetData.tweet;
             this.data.eventdate = this.tweetData.eventDate;
             this.data.priority = this.tweetData.priority;
-
-            //sessionStorage.setItem('tweetToUpdate', JSON.stringify(updatedTweet));
-
-
         }, (err) => {
             console.log("Error--->" + err.message);
             this.someError = true;

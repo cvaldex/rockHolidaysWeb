@@ -33,12 +33,12 @@ const appRoutes: Routes = [
       data: { title: 'Tweet Added Succesfully' }
   },
   {
-      path: 'tweet-add',
+      path: 'addTweet',
       component: TweetAddComponent,
       data: { title: 'Tweet Add' }
   },
   {
-      path: 'tweet-publish',
+      path: 'publishTweet',
       component: TweetPublishComponent,
       data: { title: 'Tweet Publish' }
   },
@@ -58,12 +58,12 @@ const appRoutes: Routes = [
       data: { title: 'Tweet Show Grid' }
   },
   {
-      path: 'tweet-search-by-date-holder',
+      path: 'searchByDate',
       component: TweetSearchByDateHolder,
       data: { title: 'Tweet Search By Date Holder' }
   },
   {
-      path: 'tweet-search-by-text-holder',
+      path: 'searchByText',
       component: TweetSearchByTextHolder,
       data: { title: 'Tweet Search By Text Holder' }
   },

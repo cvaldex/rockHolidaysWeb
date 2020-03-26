@@ -12,9 +12,11 @@ export class TweetAddComponent implements OnInit {
     fileToUpload: File = null;
     reader: FileReader[]  = [];
     someError: Boolean = false;
+    success: Boolean = false;
     errorMessage = "";
     MAX_FILE_SIZE: Number = 5242880;
     public priorities:Array<string> = ['0', '1', '2', '3', '4'];
+    tweetId = "";
 
     @Input() tweetData = { text:'', date: '', author: '', priority: '', image1: '', image2: '', image3: '', image4: '' };
 
@@ -31,9 +33,14 @@ export class TweetAddComponent implements OnInit {
         this.tweetData.image3 = this.getFileContent(this.reader[2]);
         this.tweetData.image4 = this.getFileContent(this.reader[3]);
 
+        this.someError = false;
+        this.success = false;
+
         this.tweet.addTweet(this.tweetData).subscribe((result) => {
             console.log("Result: " + result);
-            this.router.navigate(['/tweet-add-success/'+result.id]);
+            //this.router.navigate(['/tweet-add-success/'+result.id]);
+            this.tweetId = result.id;
+            this.success = true;
         }, (err) => {
             console.log("Error--->" + err.message);
             this.someError = true;
@@ -56,7 +63,6 @@ export class TweetAddComponent implements OnInit {
                 return false;
             }
         }
-
 
         for (var i = 0; i < files.length; i++) {
             orderFileList.push(i);
@@ -100,5 +106,16 @@ export class TweetAddComponent implements OnInit {
         }
 
         return content;
+    }
+
+    hideAlert(alertType: string){
+        if(alertType == 'success'){
+            this.success = false;
+        }
+        else{
+            if(alertType == 'error'){
+                this.someError = false;
+            }
+        }
     }
 }

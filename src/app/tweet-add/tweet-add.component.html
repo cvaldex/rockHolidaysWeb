@@ -1,29 +1,30 @@
 <div class="container">
     <h2>Agregar Tweet v2.0</h2>
-    <form>
+    <form #newTweetForm="ngForm" name="newTweetForm">
         <div class="form-group">
             <label class="col-form-label">Tweet:</label>
             <textarea [(ngModel)]="tweetData.text" name="tweetData.text" maxlength="265" ng-trim="false" class="form-control" rows="7"></textarea>
-            <small id="emailHelp" class="form-text text-muted">{{265 - tweetData.text.length}} restantes</small>
+            <small id="textLength" class="form-text text-muted">{{265 - tweetData?.text?.length}} restantes</small>
         </div>
 
         <div class="form-group">
             <div class="row">
-                <div class="col-sm">
+                <div class="col">
                     <label class="col-form-label">Fecha:</label>
                 </div>
-                <div class="col-md">
+                <div class="col">
                     <input [(ngModel)]="tweetData.date" name="tweetData.date" class="form-control"/>
+                    <div class="help-block with-errors"></div>
                 </div>
             </div>
         </div>
 
         <div class="form-group">
             <div class="row">
-                <div class="col-sm">
+                <div class="col">
                     <label class="col-form-label">Prioridad:</label>
                 </div>
-                <div class="col-md">
+                <div class="col">
                     <select [(ngModel)]="tweetData.priority" name="tweetData.priority" class="form-control">
                         <option [value]="priority" *ngFor="let priority of priorities">{{priority}}</option>
                     </select>
@@ -33,13 +34,7 @@
 
         <div class="form-group">
             <label class="col-form-label">Imágenes:</label>
-            <input type="file" id="imagenes" (change)="handleMultipleFileInput($event.target.files)" multiple>
-
-            <!--div class="animate-show-hide" *ngIf="someError">
-                <div class="alert alert-danger"  role="alert">
-                  {{ errorMessage }}
-                </div>
-            </div-->
+            <input #imagesToUpload type="file" id="imagenes" (change)="handleMultipleFileInput($event.target.files , $event)" multiple>
         </div>
 
         <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="someError">
@@ -51,13 +46,13 @@
 
         <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="success">
             Registro {{tweetId}} exitosamente ingresado
-            <button (click)="hideAlert('success')" type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button (click)="hideAlert('success'); cleanForm();" type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
         </div>
 
         <div class="form-group">
-            <button (click)="addTweet()" class="custom-file-input" type="button" class="btn btn-primary btn-lg btn-block" [disabled]="someError">Guardar Tweet</button>
+            <button (click)="addTweet(newTweetForm)" class="custom-file-input" type="button" class="btn btn-primary btn-lg btn-block" [disabled]="someError">Guardar Tweet</button>
         </div>
     </form>
 </div>

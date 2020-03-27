@@ -1,5 +1,5 @@
 <div class="container">
-    <h2>Actualizar Tweet {{tweetData.id}}</h2>
+    <b>Actualizar Tweet {{tweetData.id}}</b>
     <form>
         <div class="form-group">
             <label class="col-form-label">Tweet:</label>
@@ -9,10 +9,10 @@
 
         <div class="form-group">
             <div class="row">
-                <div class="col-sm">
+                <div class="col">
                     <label class="col-form-label">Fecha:</label>
                 </div>
-                <div class="col-md">
+                <div class="col">
                     <input [(ngModel)]="tweetData.eventDate" name="tweetData.eventDate" class="form-control"/>
                 </div>
             </div>
@@ -20,10 +20,10 @@
 
         <div class="form-group">
             <div class="row">
-                <div class="col-sm">
+                <div class="col">
                     <label class="col-form-label">Prioridad:</label>
                 </div>
-                <div class="col-md">
+                <div class="col">
                     <select [(ngModel)]="tweetData.priority" name="tweetData.priority" class="form-control">
                         <option [value]="priority" *ngFor="let priority of priorities">{{priority}}</option>
                     </select> 

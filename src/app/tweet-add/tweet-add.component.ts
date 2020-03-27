@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewChildren, ElementRef } from '@angular/core';
 import { TweetService } from '../tweet.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
     selector: 'app-tweet-add',
@@ -17,6 +18,9 @@ export class TweetAddComponent implements OnInit {
     MAX_FILE_SIZE: Number = 5242880;
     public priorities:Array<string> = ['0', '1', '2', '3', '4'];
     tweetId = "";
+    
+    newTweetForm: NgForm;
+    inputFile;
 
     @Input() tweetData = { text:'', date: '', author: '', priority: '', image1: '', image2: '', image3: '', image4: '' };
 
@@ -27,7 +31,9 @@ export class TweetAddComponent implements OnInit {
         this.tweetData.author = 'cvaldex@gmail.com';
     }
 
-    addTweet() {
+    addTweet(f: NgForm) {
+        this.newTweetForm = f;
+
         this.tweetData.image1 = this.getFileContent(this.reader[0]);
         this.tweetData.image2 = this.getFileContent(this.reader[1]);
         this.tweetData.image3 = this.getFileContent(this.reader[2]);
@@ -35,6 +41,8 @@ export class TweetAddComponent implements OnInit {
 
         this.someError = false;
         this.success = false;
+
+        //console.log(this.imagesToUpload);
 
         this.tweet.addTweet(this.tweetData).subscribe((result) => {
             console.log("Result: " + result);
@@ -48,9 +56,10 @@ export class TweetAddComponent implements OnInit {
         });
     }
 
-    handleMultipleFileInput(files: FileList) {
+    handleMultipleFileInput(files: FileList, event: Event) {
         console.log("handleFileInput: File set length: " + files.length);
-
+        //console.log(event.srcElement);
+        this.inputFile = event.srcElement;
         //Validar que el peso de los archivos es el correcto
         var orderFileList = [];
         this.someError = false; //resetear para ocultar el label de error
@@ -111,6 +120,8 @@ export class TweetAddComponent implements OnInit {
     hideAlert(alertType: string){
         if(alertType == 'success'){
             this.success = false;
+
+            this.cleanForm();
         }
         else{
             if(alertType == 'error'){
@@ -118,4 +129,47 @@ export class TweetAddComponent implements OnInit {
             }
         }
     }
+
+    //limpiar el formulario para subir un nuevo hito
+    cleanForm(){
+        this.tweetData.date = "";
+        this.tweetData.priority = "2";
+        this.tweetData.text = "";
+
+        this.tweetData.image1 = "";
+        this.tweetData.image2 = "";
+        this.tweetData.image3 = "";
+        this.tweetData.image4 = "";
+
+        //this.imagesToUpload.nativeElement.value = "";
+        this.inputFile.value = "";
+        this.newTweetForm.resetForm();
+    }
+
+    // Validates that the input string is a valid date formatted as "mm/dd/yyyy"
+     isValidDate(dateString: string){
+        // First check for the pattern
+        //if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
+        if(!/^\d{1,2}-\d{1,2}-\d{4}$/.test(dateString))
+            return false;
+
+        // Parse the date parts to integers
+        var parts = dateString.split("-");
+        var day = parseInt(parts[1], 10);
+        var month = parseInt(parts[0], 10);
+        var year = parseInt(parts[2], 10);
+
+        // Check the ranges of month and year
+        //if(year < 1000 || year > 3000 || month == 0 || month > 12)
+        //    return false;
+
+        var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+        // Adjust for leap years
+        if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+            monthLength[1] = 29;
+
+        // Check the range of the day
+        return day > 0 && day <= monthLength[month - 1];
+    };
 }

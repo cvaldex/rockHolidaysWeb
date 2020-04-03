@@ -20,6 +20,8 @@ import { TweetSearchByDateHolder } from './tweet-search-by-date-holder/tweet-sea
 import { TweetSearchByText } from './tweet-search-by-text/tweet-search-by-text.component';
 import { TweetSearchByTextHolder } from './tweet-search-by-text-holder/tweet-search-by-text-holder.component';
 
+import {GenericPopupComponent} from './generic-popup/generic-popup.component';
+
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule , FormBuilder } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -87,7 +89,8 @@ const appRoutes: Routes = [
     TweetSearchByDateHolder,
     TweetSearchByText,
     TweetSearchByTextHolder,
-    TweetUpdateComponent
+    TweetUpdateComponent,
+    GenericPopupComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -98,6 +101,9 @@ const appRoutes: Routes = [
     MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    GenericPopupComponent
+]
 })
 export class AppModule { }

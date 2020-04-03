@@ -41,7 +41,7 @@ export class TweetShowGrid implements OnInit {
       console.log(this.tweets[index]);
 
       //this.sendMessage(this.tweets[index]);
-      sessionStorage.setItem('tweetToUpdate', JSON.stringify(this.tweets[index]));
+      //sessionStorage.setItem('tweetToUpdate', JSON.stringify(this.tweets[index]));
       //sessionStorage.tweetToUpdate = this.tweets[index];
       
       //var tweetToUpdate = ;

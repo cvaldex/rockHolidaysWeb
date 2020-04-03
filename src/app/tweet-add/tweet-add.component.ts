@@ -3,6 +3,10 @@ import { TweetService } from '../tweet.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+import { GenericPopupComponent } from '../generic-popup/generic-popup.component';
+
 @Component({
     selector: 'app-tweet-add',
     templateUrl: './tweet-add.component.html',
@@ -24,7 +28,7 @@ export class TweetAddComponent implements OnInit {
 
     @Input() tweetData = { text:'', date: '', author: '', priority: '', image1: '', image2: '', image3: '', image4: '' };
 
-    constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router) { }
+    constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, public dialog: MatDialog) { }
 
     ngOnInit() {
         this.tweetData.priority='2'; //default para el option
@@ -42,13 +46,13 @@ export class TweetAddComponent implements OnInit {
         this.someError = false;
         this.success = false;
 
-        //console.log(this.imagesToUpload);
-
         this.tweet.addTweet(this.tweetData).subscribe((result) => {
             console.log("Result: " + result);
-            //this.router.navigate(['/tweet-add-success/'+result.id]);
             this.tweetId = result.id;
             this.success = true;
+            
+            this.showOKPopup();
+
         }, (err) => {
             console.log("Error--->" + err.message);
             this.someError = true;
@@ -58,7 +62,6 @@ export class TweetAddComponent implements OnInit {
 
     handleMultipleFileInput(files: FileList, event: Event) {
         console.log("handleFileInput: File set length: " + files.length);
-        //console.log(event.srcElement);
         this.inputFile = event.srcElement;
         //Validar que el peso de los archivos es el correcto
         var orderFileList = [];
@@ -118,16 +121,22 @@ export class TweetAddComponent implements OnInit {
     }
 
     hideAlert(alertType: string){
-        if(alertType == 'success'){
-            this.success = false;
+        if(alertType == 'error'){
+            this.someError = false;
+        }
+    }
 
+    showOKPopup(){
+        var popupData = {
+            windowMessage : "Agregar Tweet",
+            popupMessage : "Tweet " + this.tweetId + " correctamente ingresado"
+        };
+
+        let dialogRef = this.dialog.open(GenericPopupComponent, {data: popupData});
+
+        dialogRef.afterClosed().subscribe(result => {
             this.cleanForm();
-        }
-        else{
-            if(alertType == 'error'){
-                this.someError = false;
-            }
-        }
+        });
     }
 
     //limpiar el formulario para subir un nuevo hito
@@ -141,9 +150,11 @@ export class TweetAddComponent implements OnInit {
         this.tweetData.image3 = "";
         this.tweetData.image4 = "";
 
-        //this.imagesToUpload.nativeElement.value = "";
         this.inputFile.value = "";
         this.newTweetForm.resetForm();
+        
+        //volver la prioridad al valor por defecto
+        this.newTweetForm.form.controls['tweetData.priority'].setValue("2");
     }
 
     // Validates that the input string is a valid date formatted as "mm/dd/yyyy"

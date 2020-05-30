@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import { GenericPopupComponent } from '../generic-popup/generic-popup.component';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-tweet-add',
@@ -18,7 +19,9 @@ export class TweetAddComponent implements OnInit {
     reader: FileReader[]  = [];
     someError: Boolean = false;
     success: Boolean = false;
+    hasRepeatedWords: Boolean = false;
     errorMessage = "";
+    repeatedWords = "";
     MAX_FILE_SIZE: Number = 5242880;
     public priorities:Array<string> = ['0', '1', '2', '3', '4'];
     tweetId = "";
@@ -155,6 +158,50 @@ export class TweetAddComponent implements OnInit {
         
         //volver la prioridad al valor por defecto
         this.newTweetForm.form.controls['tweetData.priority'].setValue("2");
+    }
+
+    avoidDuplicates(){
+        var words = this.tweetData.text.split(' ');
+        var allWords = this.getMapWithWhiteListWords();
+        
+        this.repeatedWords = "";
+        this.hasRepeatedWords = false;
+
+        words.forEach(word => {
+            var key = word.trim().toLowerCase(); //validate lower or upper case
+            var value = allWords.get(key);
+
+            if(typeof value == 'undefined'){
+                allWords.set(key , 1);
+            }
+            else{
+                value = value + 1;
+                allWords.set(key , value);
+            }
+        });
+
+        for (var key of allWords.keys()) {
+            var value = allWords.get(key);
+            if(value > 1){
+                this.hasRepeatedWords = true;
+                this.repeatedWords = this.repeatedWords + " " + key;
+            }
+        }
+
+        if(this.hasRepeatedWords){
+            console.log("Palabras repetidas: " + this.repeatedWords);
+        }
+    }
+
+    getMapWithWhiteListWords(){
+        var whiteListWords = "de,en,y,a,un,una,el,ella".split(",");
+        var whiteListWordsMap = new Map();
+
+        whiteListWords.forEach(word => {
+            whiteListWordsMap.set(word.trim() , -1000);
+        });
+
+        return whiteListWordsMap;
     }
 
     // Validates that the input string is a valid date formatted as "mm/dd/yyyy"

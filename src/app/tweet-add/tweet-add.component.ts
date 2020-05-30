@@ -168,16 +168,12 @@ export class TweetAddComponent implements OnInit {
         this.hasRepeatedWords = false;
 
         words.forEach(word => {
-            var key = word.trim().toLowerCase(); //validate lower or upper case
+            var key = this.getCleanKeyFromWord(word).toLowerCase(); //validate lower or upper case
             var value = allWords.get(key);
 
-            if(typeof value == 'undefined'){
-                allWords.set(key , 1);
-            }
-            else{
-                value = value + 1;
-                allWords.set(key , value);
-            }
+            value = (typeof value == 'undefined') ? 1 : value + 1;
+
+            allWords.set(key , value);
         });
 
         for (var key of allWords.keys()) {
@@ -191,6 +187,20 @@ export class TweetAddComponent implements OnInit {
         if(this.hasRepeatedWords){
             console.log("Palabras repetidas: " + this.repeatedWords);
         }
+    }
+
+    /**
+     * Funcion que hace trim y signos de puntuacion que podrían diferenciar entre palabras
+     * @param word palabra a limpiar
+     */
+    getCleanKeyFromWord(word: string){
+        var cleanWord = word.trim();
+
+        cleanWord = cleanWord.replace(/,/g, "");
+        cleanWord = cleanWord.replace(/\./g, "");
+        cleanWord = cleanWord.replace(/;/g, "");
+
+        return cleanWord;
     }
 
     getMapWithWhiteListWords(){

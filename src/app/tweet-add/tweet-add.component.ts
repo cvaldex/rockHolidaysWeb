@@ -183,10 +183,6 @@ export class TweetAddComponent implements OnInit {
                 this.repeatedWords = this.repeatedWords + " " + key;
             }
         }
-
-        if(this.hasRepeatedWords){
-            console.log("Palabras repetidas: " + this.repeatedWords);
-        }
     }
 
     /**

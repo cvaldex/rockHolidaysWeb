@@ -15,6 +15,7 @@ export class TweetSearchByText implements OnInit {
     //reader: FileReader[]  = [];
     someError: Boolean = false;
     errorMessage = "";
+    hasNoRecordsFound: Boolean = false;
 
     @Output()
     populateGrid = new EventEmitter<string>();
@@ -31,12 +32,21 @@ export class TweetSearchByText implements OnInit {
 
 
     searchTweetByText() {
-        if(this.searchData.text.length == 0){
-          this.errorMessage = "Write something!"
+        this.someError = false;
+        if(this.searchData.text.trim().length == 0){
+            this.someError = true;
+            this.errorMessage = "Ingresa algún texto para buscar";
+            return;
         }
 
+        this.hasNoRecordsFound = false;
+
         this.tweet.searchTweetByText(this.searchData).subscribe((result) => {
-            console.log("Result in search: " + result.length);
+            //console.log("Result in search: " + result.length);
+            if(result.length == 0){
+                this.hasNoRecordsFound = true;
+            }
+
             this.sendMessage(result);
         }, (err) => {
             console.log("Error--->" + err.message);

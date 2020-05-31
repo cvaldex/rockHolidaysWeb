@@ -4,4 +4,13 @@
     <input class="form-control mr-sm-2" [(ngModel)]="searchData.text" name="searchData.text" type="text" placeholder="Write some words" aria-label="Search">
     <button (click)="searchTweetByText()" class="btn btn-primary btn-md" type="submit">Buscar</button>
 </form>
+<div class="alert alert-warning" role="alert" *ngIf="hasNoRecordsFound">
+  No existen resultados para la búsqueda
+</div>
+
+<div class="animate-show-hide" *ngIf="someError">
+  <div class="alert alert-danger"  role="alert">
+    {{ errorMessage }}
+  </div>
+</div>
 </div>

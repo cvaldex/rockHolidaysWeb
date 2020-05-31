@@ -11,10 +11,9 @@ import { MessageService } from '../services/index';
 })
 
 export class TweetSearchByDate implements OnInit {
-    //fileToUpload: File = null;
-    //reader: FileReader[]  = [];
     someError: Boolean = false;
     errorMessage = "";
+    hasNoRecordsFound: Boolean = false;
 
     @Output()
     populateGrid = new EventEmitter<string>();
@@ -24,8 +23,6 @@ export class TweetSearchByDate implements OnInit {
     constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, private messageService: MessageService) { }
 
     ngOnInit() {
-        //this.tweetData.priority='2'; //default para el option
-        //this.tweetData.author = 'cvaldex@gmail.com';
         this.searchData.date = "";
     }
 
@@ -49,13 +46,16 @@ export class TweetSearchByDate implements OnInit {
                 return;
             }
         }
-
+        this.hasNoRecordsFound = false;
         this.someError = false; //limpiar mensaje en caso de múltiples búsquedas
 
         console.log("Fecha de busqueda: " + this.searchData.date);
 
         this.tweet.searchTweetByDate(this.searchData).subscribe((result) => {
-            console.log("Result in search: " + result.length);
+            //console.log("Result in search: " + result.length);
+            if(result.length == 0){
+                this.hasNoRecordsFound = true;
+            }
             this.sendMessage(result);
         }, (err) => {
             console.log("Error--->" + err.message);

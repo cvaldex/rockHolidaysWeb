@@ -5,20 +5,32 @@
   <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Editar</th>
+      <th scope="col" width="25%">Datos</th>
+      <!--th scope="col">Editar</th>
       <th scope="col">Prioridad</th>
-      <th scope="col">Fecha</th>
-      <th scope="col">Texto</th>
+      <th scope="col">Fecha</th-->
+      <th scope="col" width="75%">Texto</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let tweet of tweets; index as i">
-    <td>{{ tweet.id }}</td>
-    <td><img (click)="updateTweet(i)" src="assets/img/edit.png"/></td>
-    <td>{{ tweet.priority }}</td>
-    <td>{{ tweet.eventdate.substring(0,10) | date:'yyyy/MM/dd'}}</td>
-    <td>{{ tweet.tweet }}</td>
+      <td>
+        
+        ID: {{ tweet.id }}<br/>
+        Prioridad: {{ tweet.priority }}<br/>
+        Fecha: {{ tweet.eventdate.substring(0,10) | date:'yyyy/MM/dd' }}<br/>
+      </td>
+      <!--td><img (click)="updateTweet(i)" src="assets/img/edit.png"/></td>
+      <td>{{ tweet.priority }}</td>
+      <td>{{ }}</td-->
+      <td>
+        <p>{{ tweet.tweet }}</p> 
+        <p>
+          <img class="ml-4" (click)="updateTweet(i)" src="assets/img/pencil.png"/>
+          <img class="ml-4" (click)="updateTweet(i)" src="assets/img/delete.png"/>
+          <img class="ml-4" (click)="updateTweet(i)" src="assets/img/clone.png"/>
+        </p>
+      </td>
   </tr>
   </tbody>
   </table>

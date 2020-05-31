@@ -8,6 +8,8 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { GenericPopupComponent } from '../generic-popup/generic-popup.component';
 import { map } from 'rxjs/operators';
 
+import WhitelistJson from '../../assets/static-json/repeated-words-whitelist.json';
+
 @Component({
     selector: 'app-tweet-add',
     templateUrl: './tweet-add.component.html',
@@ -195,12 +197,14 @@ export class TweetAddComponent implements OnInit {
         cleanWord = cleanWord.replace(/,/g, "");
         cleanWord = cleanWord.replace(/\./g, "");
         cleanWord = cleanWord.replace(/;/g, "");
+        cleanWord = cleanWord.replace(/'/g, "");
+        cleanWord = cleanWord.replace(/"/g, "");
 
         return cleanWord;
     }
 
     getMapWithWhiteListWords(){
-        var whiteListWords = "de,en,y,a,un,una,el,ella".split(",");
+        var whiteListWords = WhitelistJson.whitelist.split(",");
         var whiteListWordsMap = new Map();
 
         whiteListWords.forEach(word => {

@@ -24,9 +24,10 @@ export class TweetAddComponent implements OnInit {
     hasRepeatedWords: Boolean = false;
     errorMessage = "";
     repeatedWords = "";
-    MAX_FILE_SIZE: Number = 5242880;
+    MAX_FILE_SIZE: Number = 4 * 1024 * 1024; //4MB como máximo
     public priorities:Array<string> = ['0', '1', '2', '3', '4'];
     tweetId = "";
+    whiteListWords = [];
     
     newTweetForm: NgForm;
     inputFile;
@@ -38,6 +39,7 @@ export class TweetAddComponent implements OnInit {
     ngOnInit() {
         this.tweetData.priority='2'; //default para el option
         this.tweetData.author = 'cvaldex@gmail.com';
+        this.whiteListWords = WhitelistJson.whitelist.split(",");
     }
 
     addTweet(f: NgForm) {
@@ -134,7 +136,9 @@ export class TweetAddComponent implements OnInit {
     showOKPopup(){
         var popupData = {
             windowMessage : "Agregar Tweet",
-            popupMessage : "Tweet " + this.tweetId + " correctamente ingresado"
+            popupMessage : "Tweet " + this.tweetId + " correctamente ingresado",
+            actionButtonMessage: "Aceptar",
+            showCancelButton: false
         };
 
         let dialogRef = this.dialog.open(GenericPopupComponent, {data: popupData});
@@ -164,7 +168,7 @@ export class TweetAddComponent implements OnInit {
     }
 
     avoidDuplicates(){
-        var words = this.tweetData.text.split(' ');
+        var words = this.tweetData.text != null ? this.tweetData.text.split(' ') : [];
         var allWords = this.getMapWithWhiteListWords();
         
         this.repeatedWords = "";
@@ -205,10 +209,9 @@ export class TweetAddComponent implements OnInit {
     }
 
     getMapWithWhiteListWords(){
-        var whiteListWords = WhitelistJson.whitelist.split(",");
         var whiteListWordsMap = new Map();
 
-        whiteListWords.forEach(word => {
+        this.whiteListWords.forEach(word => {
             whiteListWordsMap.set(word.trim() , -1000);
         });
 

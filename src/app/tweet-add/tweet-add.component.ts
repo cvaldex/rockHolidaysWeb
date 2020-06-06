@@ -156,6 +156,7 @@ export class TweetAddComponent implements OnInit {
         this.tweetData.image4 = "";
 
         this.inputFile.value = "";
+        this.hasRepeatedWords = false;
         this.newTweetForm.resetForm();
         
         //volver la prioridad al valor por defecto

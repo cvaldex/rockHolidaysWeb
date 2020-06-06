@@ -11,16 +11,24 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 export class GenericPopupComponent implements OnInit {
     windowMessage: String;
     popupMessage: String;
+    actionButtonMessage: String;
+    cancelButtonMessage: String;
+    showCancelButton: Boolean = false;
+
     constructor(private route: ActivatedRoute , private router: Router,
         public dialogRef: MatDialogRef<GenericPopupComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() {
-        //this.id = this.route.snapshot.params['id'];
         this.windowMessage = this.data.windowMessage;
         this.popupMessage = this.data.popupMessage;
+        this.showCancelButton = this.data.showCancelButton;
+        this.actionButtonMessage = this.data.actionButtonMessage;
+        this.cancelButtonMessage = this.data.cancelButtonMessage;
     }
 
-    close() {
-        this.dialogRef.close();
-    }   
+    closeDialog(word: string) {
+        this.dialogRef.close(word);
+    }  
+    
+
 }

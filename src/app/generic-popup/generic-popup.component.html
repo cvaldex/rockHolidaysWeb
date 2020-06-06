@@ -1,5 +1,14 @@
 <div class="container">
   <h4>{{windowMessage}}</h4>
   <label>{{popupMessage}}</label>
-  <button class="btn btn-primary btn-lg btn-block"(click)="close()">Cerrar</button>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-primary btn-sm btn-block my-2"(click)="closeDialog('action')">{{this.actionButtonMessage}}</button>
+      </div>
+      <div class="col" *ngIf="showCancelButton">
+        <button class="btn btn-primary btn-sm btn-block my-2"(click)="closeDialog('cancel')">{{this.cancelButtonMessage}}</button>
+      </div>
+    </div> 
+  </div>
 </div>

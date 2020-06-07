@@ -11,8 +11,6 @@ import { MessageService } from '../services/index';
 })
 
 export class TweetSearchByText implements OnInit {
-    //fileToUpload: File = null;
-    //reader: FileReader[]  = [];
     someError: Boolean = false;
     errorMessage = "";
     hasNoRecordsFound: Boolean = false;
@@ -25,11 +23,8 @@ export class TweetSearchByText implements OnInit {
     constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, private messageService: MessageService) { }
 
     ngOnInit() {
-        //this.tweetData.priority='2'; //default para el option
-        //this.tweetData.author = 'cvaldex@gmail.com';
         this.searchData.text = "";
     }
-
 
     searchTweetByText() {
         this.someError = false;
@@ -42,7 +37,6 @@ export class TweetSearchByText implements OnInit {
         this.hasNoRecordsFound = false;
 
         this.tweet.searchTweetByText(this.searchData).subscribe((result) => {
-            //console.log("Result in search: " + result.length);
             if(result.length == 0){
                 this.hasNoRecordsFound = true;
             }

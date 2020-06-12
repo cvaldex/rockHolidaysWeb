@@ -50,11 +50,19 @@
             </button>
         </div>
         
-        <div class="form-group">
-            <button (click)="updateTweet()" class="custom-file-input" type="button" class="btn btn-primary btn-lg btn-block">Actualizar Tweet</button>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary btn-lg btn-block"(click)="close()">Cerrar</button>
+        <div class="container">
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                    <button (click)="updateTweet()" class="btn btn-primary btn-sm btn-block">Actualizar</button>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                    <button class="btn btn-primary btn-sm btn-block"(click)="close()">Cerrar</button>
+                </div>
+              </div>
+            </div>
         </div>
     </form>
 </div>

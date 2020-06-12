@@ -1,8 +1,16 @@
 <div class="container">
-  <h2>Buscar Tweets por fecha</h2>
-  <form class="form-inline md-form mr-auto mb-4">
-    <input class="form-control mr-sm-2" [(ngModel)]="searchData.date" name="searchData.date" type="text" placeholder="Formato: MMdd" aria-label="Search">
-    <button (click)="searchTweetByDate()" class="btn btn-primary btn-md" type="submit">Buscar</button>
+  <form class="md-form mr-auto my-4">
+    <h3>Buscar Tweets por fecha</h3>
+    <div class="container">
+      <div class="row">
+        <div class="col-9">
+          <input class="form-control mr-sm-2" [(ngModel)]="searchData.date" name="searchData.date" type="text" placeholder="Formato: MMdd" aria-label="Search">
+        </div>
+        <div class="col-3">
+          <button (click)="searchTweetByDate()" class="btn btn-primary btn-md" type="submit">Buscar</button>
+        </div>
+      </div>
+    </div> 
 </form>
 
 <div class="alert alert-warning" role="alert" *ngIf="hasNoRecordsFound">

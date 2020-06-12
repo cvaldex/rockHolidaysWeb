@@ -1,8 +1,16 @@
 <div class="container">
-  <h2>Buscar Tweets por texto</h2>
-  <form class="form-inline md-form mr-auto mb-4">
-    <input class="form-control mr-sm-2" [(ngModel)]="searchData.text" name="searchData.text" type="text" placeholder="Write some words" aria-label="Search">
-    <button (click)="searchTweetByText()" class="btn btn-primary btn-md" type="submit">Buscar</button>
+  <form class="md-form mr-auto my-4">
+    <h3>Buscar Tweets por texto</h3>
+    <div class="container">
+      <div class="row">
+        <div class="col-9">
+          <input class="form-control" [(ngModel)]="searchData.text" name="searchData.text" type="text" placeholder="Write some words" aria-label="Search">
+        </div>
+        <div class="col-3">  
+          <button (click)="searchTweetByText()" class="btn btn-primary btn-md" type="submit">Buscar</button>
+        </div>
+      </div>
+    </div>    
 </form>
 <div class="alert alert-warning" role="alert" *ngIf="hasNoRecordsFound">
   No existen resultados para la búsqueda

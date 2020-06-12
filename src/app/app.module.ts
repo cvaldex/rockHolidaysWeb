@@ -22,6 +22,8 @@ import { TweetSearchByTextHolder } from './tweet-search-by-text-holder/tweet-sea
 
 import {GenericPopupComponent} from './generic-popup/generic-popup.component';
 
+import{ImageGallery} from './image-gallery/image-gallery.component';
+
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule , FormBuilder } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -73,7 +75,13 @@ const appRoutes: Routes = [
     path: 'updateTweet',
     component: TweetUpdateComponent,
     data: { title: 'Tweet Update Holder' }
+  },
+  {
+    path: 'imageGallery',
+    component: ImageGallery,
+    data: { title: 'Image Gallery' }
   }
+
 ];
 
 @NgModule({
@@ -90,7 +98,8 @@ const appRoutes: Routes = [
     TweetSearchByText,
     TweetSearchByTextHolder,
     TweetUpdateComponent,
-    GenericPopupComponent
+    GenericPopupComponent,
+    ImageGallery
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

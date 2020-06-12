@@ -3,12 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { GenericPopupComponent } from '../generic-popup/generic-popup.component';
+import { ImageGallery } from '../image-gallery/image-gallery.component';
+
 
 @Component({
   selector: 'app-tweet-add-success',
   templateUrl: './tweet-add-success.component.html',
   styleUrls: ['./tweet-add-success.component.css']
 })
+
 export class TweetAddSuccessComponent implements OnInit {
     id: String;
     constructor(private route: ActivatedRoute , private router: Router , public dialog: MatDialog) { }
@@ -33,4 +36,19 @@ export class TweetAddSuccessComponent implements OnInit {
             console.log("Pressed button: " + result);
         });
     }
+
+    showGallery() {
+        //var selectedButton = "";
+        var imageGalleryData = {
+            id : "3242"
+        };
+
+        let dialogRef = this.dialog.open(ImageGallery, {data: imageGalleryData});
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log("Closed Image Gallery");
+        });
+    }
+
+    
 }

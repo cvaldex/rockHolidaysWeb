@@ -9,6 +9,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 
 import { TweetUpdateComponent } from '../tweet-update/tweet-update.component';
 import { GenericPopupComponent } from '../generic-popup/generic-popup.component';
+import { ImageGallery } from '../image-gallery/image-gallery.component';
 
 @Component({
     selector: 'app-show-grid',
@@ -70,6 +71,18 @@ export class TweetShowGrid implements OnInit {
           if(result == "action"){
             this.deleteTweetServiceCall(index)
           }
+      });
+    }
+
+    showGallery(index: string) {
+      var imageGalleryData = {
+          id : this.tweets[index].id
+      };
+
+      let dialogRef = this.dialog.open(ImageGallery, {data: imageGalleryData});
+
+      dialogRef.afterClosed().subscribe(result => {
+          console.log("Closed Image Gallery");
       });
     }
 

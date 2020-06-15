@@ -3,9 +3,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
-  const getImagesEndpoint = 'https://xb0qdcz4s7.execute-api.us-east-1.amazonaws.com/prod/images';
+  const imagesAPIEndpoint = 'https://xb0qdcz4s7.execute-api.us-east-1.amazonaws.com/prod/images';
   
-
   const httpOptions = {
       headers: new HttpHeaders({
           'Content-Type':  'application/json'
@@ -27,8 +26,16 @@ import { map, catchError, tap } from 'rxjs/operators';
 
     getImages (id: string): Observable<any> {
         console.log("ImagesService.getImages" + id);
-        return this.http.get<any>(`${getImagesEndpoint}?id=${id}`, httpOptions).pipe(
+        return this.http.get<any>(`${imagesAPIEndpoint}?id=${id}`, httpOptions).pipe(
             tap((images) => console.log(`added tweet w/ id=${images.image1}`))
+        );
+    }
+
+    updateImage (image): Observable<any> {
+        console.log("ImagesService.updateImage" + image);
+
+        return this.http.put<any>(imagesAPIEndpoint, JSON.stringify(image), httpOptions).pipe(
+            tap((result) => console.log("updated images" + result.affectedRows))
         );
     }
 

@@ -23,12 +23,14 @@ import { TweetSearchByTextHolder } from './tweet-search-by-text-holder/tweet-sea
 import {GenericPopupComponent} from './generic-popup/generic-popup.component';
 
 import{ImageGallery} from './image-gallery/image-gallery.component';
+import{ImageUpload} from './image-upload/image-upload.component';
 
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule , FormBuilder } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatDialogModule} from '@angular/material/dialog';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
   {
@@ -80,6 +82,11 @@ const appRoutes: Routes = [
     path: 'imageGallery',
     component: ImageGallery,
     data: { title: 'Image Gallery' }
+  },
+  {
+    path: 'imageUpload',
+    component: ImageUpload,
+    data: { title: 'Image Upload' }
   }
 
 ];
@@ -99,7 +106,8 @@ const appRoutes: Routes = [
     TweetSearchByTextHolder,
     TweetUpdateComponent,
     GenericPopupComponent,
-    ImageGallery
+    ImageGallery,
+    ImageUpload
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -107,7 +115,8 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule,
     NoopAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent],

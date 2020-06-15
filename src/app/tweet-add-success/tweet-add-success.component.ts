@@ -40,7 +40,7 @@ export class TweetAddSuccessComponent implements OnInit {
     showGallery() {
         //var selectedButton = "";
         var imageGalleryData = {
-            id : "3242"
+            id : "4090"
         };
 
         let dialogRef = this.dialog.open(ImageGallery, {data: imageGalleryData});

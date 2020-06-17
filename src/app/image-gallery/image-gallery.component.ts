@@ -100,10 +100,6 @@ export class ImageGallery implements OnInit {
           }
       });
     }
-
-    onLoadImage(){
-      console.log((this.loadedImage.nativeElement as HTMLImageElement).width);
-    }
     
     ngOnInit() {}
 }

@@ -168,26 +168,34 @@ export class TweetAddComponent implements OnInit {
     }
 
     avoidDuplicates(){
-        var words = this.tweetData.text != null ? this.tweetData.text.split(' ') : [];
-        var allWords = this.getMapWithWhiteListWords();
+        var words = this.tweetData.text != null ? this.tweetData.text.trim().split(' ') : [];
+        //cargar el mapa de palabras con la whitelist inicial
+        var allWords = this.getMapWithWhiteListWords();  
         
         this.repeatedWords = "";
         this.hasRepeatedWords = false;
 
         words.forEach(word => {
-            var key = this.getCleanKeyFromWord(word).toLowerCase(); //validate lower or upper case
-            var value = allWords.get(key);
+            var key = this.getCleanKeyFromWord(word).toLowerCase().trim(); //validate lower or upper case
 
-            value = (typeof value == 'undefined') ? 1 : value + 1;
+            if(key.length > 0){
+                var value = allWords.get(key);
 
-            allWords.set(key , value);
+                value = (typeof value == 'undefined') ? 1 : value + 1;
+
+                allWords.set(key , value);
+                console.log("Key:|" + key + "| + Value:|"+ value);
+                console.log("Trim?:|" + this.getCleanKeyFromWord(word).toLowerCase().trim() + "|");
+            }
         });
 
         for (var key of allWords.keys()) {
             var value = allWords.get(key);
+            
             if(value > 1){
                 this.hasRepeatedWords = true;
                 this.repeatedWords = this.repeatedWords + " " + key;
+                console.log("|" + key + "|");
             }
         }
     }

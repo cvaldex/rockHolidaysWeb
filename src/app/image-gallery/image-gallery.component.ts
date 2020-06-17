@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewChild, ElementRef } from '@angular/core';
 import { ImagesService } from '../images.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SafeResourceUrl } from '@angular/platform-browser';
+
+
 
 import { Subscription, Observable } from 'rxjs';
 
@@ -22,6 +24,8 @@ export class ImageGallery implements OnInit {
     areImagesLoaded: Boolean = false; //variable que controla si las imagenes están cargadas o no
     ACTION_UPDATE_IMAGE: string = "update";
     ACTION_ADD_IMAGE: string = "add";
+    
+    @ViewChild('loadedImage') loadedImage: ElementRef;
 
     constructor(public imagesService:ImagesService, private route: ActivatedRoute, private router: Router, 
       public dialogRef: MatDialogRef<ImageGallery>, @Inject(MAT_DIALOG_DATA) public data: any,
@@ -95,6 +99,10 @@ export class ImageGallery implements OnInit {
             }
           }
       });
+    }
+
+    onLoadImage(){
+      console.log((this.loadedImage.nativeElement as HTMLImageElement).width);
     }
     
     ngOnInit() {}

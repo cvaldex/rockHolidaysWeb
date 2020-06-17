@@ -10,6 +10,8 @@ import { map } from 'rxjs/operators';
 
 import WhitelistJson from '../../assets/static-json/repeated-words-whitelist.json';
 
+import RepeatedWordsUtil from '../util/RepeatedWordsUtil';
+
 @Component({
     selector: 'app-tweet-add',
     templateUrl: './tweet-add.component.html',
@@ -167,7 +169,7 @@ export class TweetAddComponent implements OnInit {
         this.newTweetForm.form.controls['tweetData.priority'].setValue("2");
     }
 
-    avoidDuplicates(){
+    /*avoidDuplicates(){
         var words = this.tweetData.text != null ? this.tweetData.text.trim().split(' ') : [];
         //cargar el mapa de palabras con la whitelist inicial
         var allWords = this.getMapWithWhiteListWords();  
@@ -198,6 +200,18 @@ export class TweetAddComponent implements OnInit {
                 console.log("|" + key + "|");
             }
         }
+    }*/
+
+    avoidDuplicates(){
+        this.hasRepeatedWords = false;
+        this.repeatedWords = "";
+
+        var repeateadWords = RepeatedWordsUtil.getRepeatedWords(this.tweetData.text);
+        
+        repeateadWords.forEach(word => {
+            this.hasRepeatedWords = true;
+            this.repeatedWords = this.repeatedWords + " " + word;
+        });
     }
 
     /**

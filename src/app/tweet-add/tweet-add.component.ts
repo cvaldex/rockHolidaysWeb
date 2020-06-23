@@ -186,8 +186,6 @@ export class TweetAddComponent implements OnInit {
                 value = (typeof value == 'undefined') ? 1 : value + 1;
 
                 allWords.set(key , value);
-                console.log("Key:|" + key + "| + Value:|"+ value);
-                console.log("Trim?:|" + this.getCleanKeyFromWord(word).toLowerCase().trim() + "|");
             }
         });
 
@@ -197,7 +195,6 @@ export class TweetAddComponent implements OnInit {
             if(value > 1){
                 this.hasRepeatedWords = true;
                 this.repeatedWords = this.repeatedWords + " " + key;
-                console.log("|" + key + "|");
             }
         }
     }*/

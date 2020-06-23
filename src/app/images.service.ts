@@ -27,7 +27,7 @@ import { map, catchError, tap } from 'rxjs/operators';
     getImages (id: string): Observable<any> {
         console.log("ImagesService.getImages" + id);
         return this.http.get<any>(`${imagesAPIEndpoint}?id=${id}`, httpOptions).pipe(
-            tap((images) => console.log(`added tweet w/ id=${images.image1}`))
+            tap((images) => console.log(`Get Images`))
         );
     }
 

@@ -1,10 +1,10 @@
 <!-- Mostrar el gif de cargando mientras se buscan las imágenes-->
-<div *ngIf="!areImagesLoaded"> 
+<div *ngIf="!areImagesLoaded || (images.length != imagesSizes.length)"> 
   <img class="img-fluid" src="assets/img/loading.gif"/>
 </div>
 
-<!-- Mostrar el carrusel cuando se hayan cargado las imágenes -->
-<ngb-carousel data-interval="false" *ngIf="areImagesLoaded"> 
+<!-- Mostrar el carrusel cuando se hayan cargado las imágenes y los tamaños de estas también -->
+<ngb-carousel data-interval="false" *ngIf="areImagesLoaded && (images.length == imagesSizes.length)"> 
   <div *ngFor="let image of images; index as i">
     <ng-template ngbSlide>
       <div class="picsum-img-wrapper">

@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 
 import WhitelistJson from '../../assets/static-json/repeated-words-whitelist.json';
 
-import RepeatedWordsUtil from '../util/RepeatedWordsUtil';
+import RepeatedWordsUtil from '../util/repeated-words-util';
 
 @Component({
     selector: 'app-tweet-add',
@@ -43,6 +43,9 @@ export class TweetAddComponent implements OnInit {
         this.tweetData.author = 'cvaldex@gmail.com';
         this.whiteListWords = WhitelistJson.whitelist.split(",");
     }
+
+
+    
 
     addTweet(f: NgForm) {
         this.newTweetForm = f;

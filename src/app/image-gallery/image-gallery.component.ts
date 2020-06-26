@@ -43,12 +43,31 @@ export class ImageGallery implements OnInit {
     }
 
     private addImageToArrayIfIsBase64(base64Image: string) {
+      if(base64Image == null){ //si la imagen es nula no se procesa
+        return;
+      }
+      
       if(this.isBase64(base64Image)){
         var newImage = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + base64Image);
         this.images.push(newImage);
 
         this.loadImage(base64Image).then(image => {this.calculateSize(image)}).catch(err => console.error(err)); 
       }
+    }
+
+    private isBase64(input: any){
+      if(input == null){
+        return false;
+      }
+      
+      var result = true;
+      
+      try {
+        window.atob(input);
+      } catch(e) {
+        result = false;
+      }
+      return result;
     }
 
     private loadImage(base64Image: String) {
@@ -63,6 +82,8 @@ export class ImageGallery implements OnInit {
     }
 
     private calculateSize(img: any){
+      //this.areImagesLoaded = false;
+      
       var imageSize = {
         width: img.naturalWidth,
         height: img.naturalHeight
@@ -72,23 +93,26 @@ export class ImageGallery implements OnInit {
       this.imagesSizes.push(imageSize);
 
       //evaluar si es posible mostrar las imagenes o aun no se hace la carga
-      this.enableImageDisplay();
+      //this.enableImageDisplay();
+      this.areImagesLoaded = true;
     }
 
+    /*
     private enableImageDisplay(){
       //si las dimensiones calculadas y las imagenes cargadas son iguales, entonces es posible mostrar la galería
       if(this.images.length == this.imagesSizes.length){
         this.areImagesLoaded = true;
-        this.imagesSizes.forEach(element => console.log("Width: " + element.width + " - Heigth: " + element.heigth));
+        this.imagesSizes.forEach(element => console.log("Width: " + element.width + " - Heigth: " + element.height));
       }
     }
+    */
 
     /*Revisar esto*/
-    private isBase64(input: string) {
+    /*private isBase64(input: string) {
       var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
 
       return !base64regex.test(input);
-    }
+    }*/
 
     updateImage(imageId: string){
       this.updateAddImage(imageId , this.ACTION_UPDATE_IMAGE);
@@ -136,12 +160,7 @@ export class ImageGallery implements OnInit {
 
             }
             else{
-              //Agregar la imagen a la galería actual, tras el ingreso a la BD  
-              var newImage = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + result.image);
-              this.images.push(newImage);
-
-              //cargar las dimensiones de las imagenes
-              this.loadImage(result.image).then(image => {this.calculateSize(image)}).catch(err => console.error(err));
+              this.addImageToArrayIfIsBase64(result.image);
             }
           }
       });

@@ -38,7 +38,7 @@ export default class RepeatedWordsUtil {
             }
         }
 
-        console.log(repeatedWords);
+        //console.log(repeatedWords);
         return repeatedWords;
     }
 
@@ -56,8 +56,11 @@ export default class RepeatedWordsUtil {
         cleanWord = cleanWord.replace(/"/g, "");
         cleanWord = cleanWord.replace(/!/g, "");
         cleanWord = cleanWord.replace(/¡/g, "");
-        //cleanWord = cleanWord.replace(/?/g, "");
+        cleanWord = cleanWord.replace(/\?/g, "");
         cleanWord = cleanWord.replace(/¿/g, "");
+        cleanWord = cleanWord.replace(/¿/g, "");
+        cleanWord = cleanWord.replace(/\(/g, "");
+        cleanWord = cleanWord.replace(/\)/g, "");
 
         return cleanWord;
     }

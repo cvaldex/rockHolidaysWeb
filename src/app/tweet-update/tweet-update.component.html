@@ -3,9 +3,13 @@
     <form>
         <div class="form-group">
             <label class="col-form-label">Tweet:</label>
-            <textarea [(ngModel)]="tweetData.tweet" name="tweetData.tweet" maxlength="265" ng-trim="false" class="form-control" rows="8"></textarea>
+            <textarea [(ngModel)]="tweetData.tweet" name="tweetData.tweet" maxlength="265" ng-trim="false" class="form-control" rows="8" (ngModelChange)=avoidDuplicates()></textarea>
             <small id="emailHelp" class="form-text text-muted">{{265 - tweetData.tweet.length}} restantes</small>
         </div>
+
+        <div class="alert alert-warning" role="alert" *ngIf="repeatedWords.length > 0">
+            Palabras repetidas: {{repeatedWords}}
+          </div>
 
         <div class="form-group">
             <div class="row">

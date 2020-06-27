@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
+import RepeatedWordsUtil from '../util/repeated-words-util';
+
 @Component({
     selector: 'app-tweet-update',
     templateUrl: './tweet-update.component.html',
@@ -18,6 +20,8 @@ export class TweetUpdateComponent implements OnInit {
     someError: Boolean = false;
     success: Boolean = false;
     errorMessage = "";
+
+    repeatedWords: String = "";
     
     public priorities:Array<string> = ['0', '1', '2', '3', '4'];
 
@@ -27,7 +31,7 @@ export class TweetUpdateComponent implements OnInit {
         public dialogRef: MatDialogRef<TweetUpdateComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() {
-        const tweetToUpdate = this.data;//JSON.parse(sessionStorage.getItem('tweetToUpdate'));
+        const tweetToUpdate = this.data;
 
         console.log("ID a actualizar" + tweetToUpdate.id);
     
@@ -35,15 +39,22 @@ export class TweetUpdateComponent implements OnInit {
         this.tweetData.tweet = tweetToUpdate.tweet.trim();
         this.tweetData.eventDate = tweetToUpdate.eventdate.substring(0,10);
         this.tweetData.priority = tweetToUpdate.priority.toString();
+        
+        //precargar las palabras duplicadas que pueden venir en el tweet guardado
+        this.avoidDuplicates();
+    }
+
+    avoidDuplicates(){
+        this.repeatedWords = "";
+
+        var repeateadWords = RepeatedWordsUtil.getRepeatedWords(this.tweetData.tweet);
+        
+        repeateadWords.forEach(word => {
+            this.repeatedWords = this.repeatedWords + " " + word;
+        });
     }
 
     updateTweet() {
-        /*
-        this.tweetData.image1 = this.getFileContent(this.reader[0]);
-        this.tweetData.image2 = this.getFileContent(this.reader[1]);
-        this.tweetData.image3 = this.getFileContent(this.reader[2]);
-        this.tweetData.image4 = this.getFileContent(this.reader[3]);
-        */
         this.someError = false;
         this.tweet.updateTweet(this.tweetData).subscribe((result) => {
             console.log("Result: " + result);
@@ -74,66 +85,5 @@ export class TweetUpdateComponent implements OnInit {
                 this.someError = false;
             }
         }
-    }
-
-    handleMultipleFileInput(files: FileList) {
-        console.log("handleFileInput: File set length: " + files.length);
-
-        //Validar que el peso de los archivos es el correcto
-        var orderFileList = [];
-        this.someError = false; //resetear para ocultar el label de error
-
-        for (var i = 0; i < files.length; i++) {
-            if(files.item(i).size >= this.MAX_FILE_SIZE){ //si es mayo que el peso máximo, no continuar el proceso
-                this.someError = true;
-                this.errorMessage = "La imagen \"" + files.item(i).name + "\" es muy pesada para ser cargada";
-
-                return false;
-            }
-        }
-
-
-        for (var i = 0; i < files.length; i++) {
-            orderFileList.push(i);
-        }
-
-        //Burbuja para ordenar los archivos por fecha de ultima modificación
-        var tmpIndex;
-        for (var i = 0; i < files.length-1; i++) {
-            if(files.item(i).lastModified > files.item(i+1).lastModified){
-                tmpIndex = orderFileList[i];
-                orderFileList[i] = orderFileList[i+1];
-                orderFileList[i+1] = tmpIndex;
-            }
-        }
-
-        //inicializar el arreglo con 4 elementos vacíos siempre
-        this.initFileArray();
-
-        for (var i = 0; i < files.length; i++) {
-            this.reader[i].onload = function(e){
-                console.log("File readead!!");
-            }
-
-            this.reader[i].readAsDataURL(files.item(orderFileList[i]));
-        }
-    }
-
-    initFileArray(){
-        this.reader = [];
-        this.reader.push(new FileReader());
-        this.reader.push(new FileReader());
-        this.reader.push(new FileReader());
-        this.reader.push(new FileReader());
-    }
-
-    getFileContent(file: FileReader){
-        let content: string = "";
-
-        if(file.readyState > 1){
-            content = file.result.toString().split(",")[1];
-        }
-
-        return content;
     }
 }

@@ -92,27 +92,8 @@ export class ImageGallery implements OnInit {
       //Guardar las dimensiones en el arrego correspondiente
       this.imagesSizes.push(imageSize);
 
-      //evaluar si es posible mostrar las imagenes o aun no se hace la carga
-      //this.enableImageDisplay();
       this.areImagesLoaded = true;
     }
-
-    /*
-    private enableImageDisplay(){
-      //si las dimensiones calculadas y las imagenes cargadas son iguales, entonces es posible mostrar la galería
-      if(this.images.length == this.imagesSizes.length){
-        this.areImagesLoaded = true;
-        this.imagesSizes.forEach(element => console.log("Width: " + element.width + " - Heigth: " + element.height));
-      }
-    }
-    */
-
-    /*Revisar esto*/
-    /*private isBase64(input: string) {
-      var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
-
-      return !base64regex.test(input);
-    }*/
 
     updateImage(imageId: string){
       this.updateAddImage(imageId , this.ACTION_UPDATE_IMAGE);
@@ -136,10 +117,6 @@ export class ImageGallery implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
           console.log(result);
-
-          /*
-          Tocar acá para recalcular las dimensiones de la imagen
-          */
 
           if(result.action == "updated"){
             if(action == this.ACTION_UPDATE_IMAGE){

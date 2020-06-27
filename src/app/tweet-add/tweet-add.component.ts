@@ -8,8 +8,6 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { GenericPopupComponent } from '../generic-popup/generic-popup.component';
 import { map } from 'rxjs/operators';
 
-import WhitelistJson from '../../assets/static-json/repeated-words-whitelist.json';
-
 import {RepeatedWordsUtil} from '../util/repeated-words-util';
 
 @Component({
@@ -41,7 +39,6 @@ export class TweetAddComponent implements OnInit {
     ngOnInit() {
         this.tweetData.priority='2'; //default para el option
         this.tweetData.author = 'cvaldex@gmail.com';
-        this.whiteListWords = WhitelistJson.whitelist.split(",");
     }
 
     addTweet(f: NgForm) {

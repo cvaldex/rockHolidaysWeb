@@ -18,7 +18,10 @@
         Fecha: {{ tweet.eventdate.substring(0,10) | date:'yyyy/MM/dd' }}<br/>
       </td>
       <td>
-        <p>{{ tweet.tweet }}</p> 
+        <p>{{ tweet.tweet }}</p>
+        <div class="alert alert-warning" role="alert" *ngIf="repeatedWords[i].length > 0">
+          Palabras repetidas: {{repeatedWords[i]}}
+        </div> 
         <p>
           <img class="ml-4" (click)="updateTweet(i)" src="assets/img/pencil.png"/>
           <img class="ml-4" (click)="deleteTweet(i)" src="assets/img/delete.png"/>

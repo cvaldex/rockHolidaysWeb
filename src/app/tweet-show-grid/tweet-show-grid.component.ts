@@ -11,6 +11,8 @@ import { TweetUpdateComponent } from '../tweet-update/tweet-update.component';
 import { GenericPopupComponent } from '../generic-popup/generic-popup.component';
 import { ImageGallery } from '../image-gallery/image-gallery.component';
 
+import RepeatedWordsUtil from '../util/repeated-words-util';
+
 @Component({
     selector: 'app-show-grid',
     templateUrl: './tweet-show-grid.component.html',
@@ -21,10 +23,9 @@ export class TweetShowGrid implements OnInit {
     someError: Boolean = false;
     errorMessage = "";
     subscription: Subscription;
-    tweets: [];
+    tweets: any[];
+    repeatedWords: string[];
     tweetsLength = 0;
-
-    @Input() searchData = { date:''};
 
     constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, private messageService: MessageService, public dialog: MatDialog) {
       // subscribe to home component messages
@@ -34,9 +35,27 @@ export class TweetShowGrid implements OnInit {
           console.log(message);
           this.tweets = message.tweet;
           this.tweetsLength = message.tweet.length;
+
+          //llenar los arreglos con palabras repetidas;
+          this.repeatedWords = [];
+          this.tweets.forEach(tweet => {
+            var text: string = tweet.tweet as string;
+            this.repeatedWords.push(this.avoidDuplicates(text));
+          });
         }
       });
     }
+
+    avoidDuplicates(text: string){
+      var repeateadWords = RepeatedWordsUtil.getRepeatedWords(text);
+      var repeatedWordsString = "";
+      
+      repeateadWords.forEach(word => {
+          repeatedWordsString = repeatedWordsString + " " + word;
+      });
+
+      return repeatedWordsString.trim(); 
+  }
 
     updateTweet(index){
       console.log("UPDATE TWEET: " + index);
@@ -47,6 +66,7 @@ export class TweetShowGrid implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         console.log("Dialog cerrado");
         console.log(this.tweets[index]);
+        this.repeatedWords[index] = this.avoidDuplicates(this.tweets[index].tweet);
       }); 
     }
 

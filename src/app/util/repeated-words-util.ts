@@ -1,17 +1,30 @@
-import WhitelistJson from '../../assets/static-json/repeated-words-whitelist.json';
+//import WhitelistJson from '../../assets/static-json/repeated-words-whitelist.json';
+import { RepeatedWordsWhitelistService } from '../repeated-words-whitelist.service';
+import { Injectable } from '@angular/core';
 
-export default class RepeatedWordsUtil {
-    static whiteListWords: string[] ;
+@Injectable({
+    providedIn: 'root'
+})
 
-    private static loadWhiteListWords(){
-        if(this.whiteListWords === undefined || this.whiteListWords.length == 0){
-            this.whiteListWords = WhitelistJson.whitelist.split(",");
-        }
+export class RepeatedWordsUtil {
+    whiteListWords: string[] ;
 
-        //return this.whiteListWords;
+    constructor(private repeatedWordWhitelistService:RepeatedWordsWhitelistService){
+        this.repeatedWordWhitelistService.getWhitelist().subscribe((response) => {
+            var listaBlanca = response.listaBlanca;
+            var whiteList = response.whiteList;
+
+            listaBlanca = listaBlanca.replace(/"/g, "");
+            whiteList = whiteList.replace(/"/g, "");
+
+            var allWordsTmp = listaBlanca + "," + whiteList;
+            this.whiteListWords = allWordsTmp.split(",");
+        }, (err) => {
+            console.log("Error loading whitelist: " + err.message);
+        });
     }
 
-    static getRepeatedWords(text: string){
+    getRepeatedWords(text: string){
         var words = text != null ? text.trim().split(' ') : [];
         //cargar el mapa de palabras con la whitelist inicial
         var allWords = this.getMapWithWhiteListWords();  
@@ -46,7 +59,7 @@ export default class RepeatedWordsUtil {
      * Funcion que hace trim y signos de puntuacion que podrían diferenciar entre palabras
      * @param word palabra a limpiar
      */
-    private static getCleanKeyFromWord(word: string){
+    private getCleanKeyFromWord(word: string){
         var cleanWord = word.trim();
 
         cleanWord = cleanWord.replace(/,/g, "");
@@ -67,11 +80,8 @@ export default class RepeatedWordsUtil {
         return cleanWord;
     }
 
-    private static getMapWithWhiteListWords(){
+    private getMapWithWhiteListWords(){
         var whiteListWordsMap = new Map();
-
-        //cargar las palabras permitidas
-        this.loadWhiteListWords();
 
         this.whiteListWords.forEach(word => {
             whiteListWordsMap.set(word.trim() , -1000);

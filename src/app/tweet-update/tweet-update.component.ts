@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-import RepeatedWordsUtil from '../util/repeated-words-util';
+import {RepeatedWordsUtil} from '../util/repeated-words-util';
 
 @Component({
     selector: 'app-tweet-update',
@@ -28,7 +28,7 @@ export class TweetUpdateComponent implements OnInit {
     @Input() tweetData = { id:'', tweet:'', eventDate: '', author: '', priority: '', image1: '', image2: '', image3: '', image4: '' };
 
     constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, 
-        public dialogRef: MatDialogRef<TweetUpdateComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+        public dialogRef: MatDialogRef<TweetUpdateComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private rwu: RepeatedWordsUtil) { }
 
     ngOnInit() {
         const tweetToUpdate = this.data;
@@ -47,7 +47,7 @@ export class TweetUpdateComponent implements OnInit {
     avoidDuplicates(){
         this.repeatedWords = "";
 
-        var repeateadWords = RepeatedWordsUtil.getRepeatedWords(this.tweetData.tweet);
+        var repeateadWords = this.rwu.getRepeatedWords(this.tweetData.tweet);
         
         repeateadWords.forEach(word => {
             this.repeatedWords = this.repeatedWords + " " + word;

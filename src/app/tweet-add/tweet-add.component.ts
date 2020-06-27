@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 
 import WhitelistJson from '../../assets/static-json/repeated-words-whitelist.json';
 
-import RepeatedWordsUtil from '../util/repeated-words-util';
+import {RepeatedWordsUtil} from '../util/repeated-words-util';
 
 @Component({
     selector: 'app-tweet-add',
@@ -36,16 +36,13 @@ export class TweetAddComponent implements OnInit {
 
     @Input() tweetData = { text:'', date: '', author: '', priority: '', image1: '', image2: '', image3: '', image4: '' };
 
-    constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, public dialog: MatDialog) { }
+    constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, public dialog: MatDialog, private rwu: RepeatedWordsUtil) { }
 
     ngOnInit() {
         this.tweetData.priority='2'; //default para el option
         this.tweetData.author = 'cvaldex@gmail.com';
         this.whiteListWords = WhitelistJson.whitelist.split(",");
     }
-
-
-    
 
     addTweet(f: NgForm) {
         this.newTweetForm = f;
@@ -206,7 +203,7 @@ export class TweetAddComponent implements OnInit {
         this.hasRepeatedWords = false;
         this.repeatedWords = "";
 
-        var repeateadWords = RepeatedWordsUtil.getRepeatedWords(this.tweetData.text);
+        var repeateadWords = this.rwu.getRepeatedWords(this.tweetData.text);
         
         repeateadWords.forEach(word => {
             this.hasRepeatedWords = true;

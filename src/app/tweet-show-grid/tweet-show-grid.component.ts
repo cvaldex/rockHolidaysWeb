@@ -11,7 +11,7 @@ import { TweetUpdateComponent } from '../tweet-update/tweet-update.component';
 import { GenericPopupComponent } from '../generic-popup/generic-popup.component';
 import { ImageGallery } from '../image-gallery/image-gallery.component';
 
-import RepeatedWordsUtil from '../util/repeated-words-util';
+import {RepeatedWordsUtil} from '../util/repeated-words-util';
 
 @Component({
     selector: 'app-show-grid',
@@ -27,7 +27,7 @@ export class TweetShowGrid implements OnInit {
     repeatedWords: string[];
     tweetsLength = 0;
 
-    constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, private messageService: MessageService, public dialog: MatDialog) {
+    constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, private messageService: MessageService, public dialog: MatDialog, private rwu: RepeatedWordsUtil) {
       // subscribe to home component messages
       this.subscription = this.messageService.getMessage().subscribe(message => {
         if (message) {
@@ -47,7 +47,7 @@ export class TweetShowGrid implements OnInit {
     }
 
     avoidDuplicates(text: string){
-      var repeateadWords = RepeatedWordsUtil.getRepeatedWords(text);
+      var repeateadWords = this.rwu.getRepeatedWords(text);
       var repeatedWordsString = "";
       
       repeateadWords.forEach(word => {

@@ -55,7 +55,7 @@ export class TweetShowGrid implements OnInit {
       });
 
       return repeatedWordsString.trim(); 
-  }
+    }
 
     updateTweet(index){
       console.log("UPDATE TWEET: " + index);
@@ -67,6 +67,44 @@ export class TweetShowGrid implements OnInit {
         console.log("Dialog cerrado");
         console.log(this.tweets[index]);
         this.repeatedWords[index] = this.avoidDuplicates(this.tweets[index].tweet);
+      }); 
+    }
+
+    cloneTweet(index){
+      console.log("CLONE TWEET: " + index);
+      console.log(this.tweets[index]);
+      
+      var popupData = {
+        windowMessage : "Clonar registro",
+        popupMessage : "¿Estás seguro de clonar el registro " + this.tweets[index].id + "?",
+        actionButtonMessage: "Clonar",
+        cancelButtonMessage: "Cancelar",
+        showCancelButton: true
+      };
+
+      let dialogRef = this.dialog.open(GenericPopupComponent, {data: popupData});
+
+      dialogRef.afterClosed().subscribe(result => {
+          console.log("Botón presionado: " + result);
+
+          if(result == "action"){
+            var newId = this.cloneTweetServiceCall(index);
+
+            var clonedTweet = {
+              id : newId,
+              eventdate : this.tweets[index].eventdate,
+              tweet : this.tweets[index].tweet,
+              priority : this.tweets[index].priority
+            }
+
+            console.log(clonedTweet);
+
+            this.tweets.splice(index, 0, clonedTweet);
+            this.tweetsLength = this.tweets.length;
+
+            var newRepeatedWords = this.repeatedWords[index];
+            this.repeatedWords.splice(index , 0 , newRepeatedWords);
+          }
       }); 
     }
 
@@ -89,7 +127,7 @@ export class TweetShowGrid implements OnInit {
           console.log("Botón presionado: " + result);
 
           if(result == "action"){
-            this.deleteTweetServiceCall(index)
+            this.deleteTweetServiceCall(index);
           }
       });
     }
@@ -125,10 +163,37 @@ export class TweetShowGrid implements OnInit {
         let dialogRef = this.dialog.open(GenericPopupComponent, {data: popupData});
       }, (err) => {
         console.log("Error borrando el tweet " + err.message);
-    });
-
-
+      });
     }
+
+    private cloneTweetServiceCall(index: string){
+      console.log("Llamar al servicio de clonado con id: " + this.tweets[index].id);
+      var newId = "25";
+      //cambiar este método
+      /*this.tweet.cloneTweetById(this.tweets[index].id).subscribe((result) => {
+        //Quitar el registro de la vista.
+        this.tweets.splice(parseInt(index) , 1);
+        this.tweetsLength = this.tweets.length;
+        
+        //mostrar mensaje de éxito
+        var popupData = {
+          windowMessage : "Clonar registro",
+          popupMessage : "Registro clonado correctamente. Nuevo ID: " + result.id,
+          actionButtonMessage: "Aceptar",
+          showCancelButton: false
+        };
+
+        let dialogRef = this.dialog.open(GenericPopupComponent, {data: popupData});
+
+        newId = result.id
+      }, (err) => {
+        console.log("Error clonando el tweet " + err.message);
+      });*/
+
+      return newId;
+    }
+
+    
 
     ngOnInit() {}
 }

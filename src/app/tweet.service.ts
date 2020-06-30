@@ -9,6 +9,7 @@ import { map, catchError, tap } from 'rxjs/operators';
   const searchTweetBytextEndpoint = 'https://faabpshtoe.execute-api.us-east-1.amazonaws.com/prod/';
   const updateTweetEndpoint = 'https://jqgrx6olxi.execute-api.us-east-1.amazonaws.com/prod/';
   const deleteTweetEndpoint = 'https://faabpshtoe.execute-api.us-east-1.amazonaws.com/prod/';
+  const cloneTweetEndpoint = 'an-emdpoint';
 
   const httpOptions = {
       headers: new HttpHeaders({
@@ -57,11 +58,17 @@ import { map, catchError, tap } from 'rxjs/operators';
         );
     }
 
-  //tweets?id=4679
     deleteTweetById (id: string): Observable<any> {
         console.log("TweetService.deleteTweetById" + id);
         return this.http.delete<any>(deleteTweetEndpoint + 'tweets?id=' + id, httpOptions).pipe(
             tap((tweet) => console.log(tweet))
+        );
+    }
+
+    cloneTweetById (id: string): Observable<any> {
+        console.log("TweetService.cloneTweetById" + id);
+        return this.http.post<any>(cloneTweetEndpoint + 'tweet', JSON.stringify(id), httpOptions).pipe(
+            tap((newTweet) => console.log(`cloned tweet w/ id=${newTweet.id}`))
         );
     }
 

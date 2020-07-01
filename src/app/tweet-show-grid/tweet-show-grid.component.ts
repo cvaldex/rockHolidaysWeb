@@ -94,7 +94,8 @@ export class TweetShowGrid implements OnInit {
               id : newId,
               eventdate : this.tweets[index].eventdate,
               tweet : this.tweets[index].tweet,
-              priority : this.tweets[index].priority
+              priority : this.tweets[index].priority,
+              cloned: true
             }
 
             console.log(clonedTweet);

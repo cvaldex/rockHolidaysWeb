@@ -12,10 +12,12 @@
   <tbody>
     <tr *ngFor="let tweet of tweets; index as i">
       <td>
-        
         ID: {{ tweet.id }}<br/>
         Prioridad: {{ tweet.priority }}<br/>
         Fecha: {{ tweet.eventdate.substring(0,10) | date:'yyyy/MM/dd' }}<br/>
+        <div class="alert alert-success" role="alert" *ngIf="tweet.cloned">
+          <img src="assets/img/warning.png"/> Clonado
+        </div>
       </td>
       <td>
         <p>{{ tweet.tweet }}</p>

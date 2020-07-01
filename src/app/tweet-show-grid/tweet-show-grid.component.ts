@@ -70,56 +70,17 @@ export class TweetShowGrid implements OnInit {
       }); 
     }
 
-    cloneTweet(index){
-      console.log("CLONE TWEET: " + index);
-      console.log(this.tweets[index]);
-      
-      var popupData = {
-        windowMessage : "Clonar registro",
-        popupMessage : "¿Estás seguro de clonar el registro " + this.tweets[index].id + "?",
-        actionButtonMessage: "Clonar",
-        cancelButtonMessage: "Cancelar",
-        showCancelButton: true
-      };
-
-      let dialogRef = this.dialog.open(GenericPopupComponent, {data: popupData});
-
-      dialogRef.afterClosed().subscribe(result => {
-          console.log("Botón presionado: " + result);
-
-          if(result == "action"){
-            var newId = this.cloneTweetServiceCall(index);
-
-            var clonedTweet = {
-              id : newId,
-              eventdate : this.tweets[index].eventdate,
-              tweet : this.tweets[index].tweet,
-              priority : this.tweets[index].priority,
-              cloned: true
-            }
-
-            console.log(clonedTweet);
-
-            this.tweets.splice(index, 0, clonedTweet);
-            this.tweetsLength = this.tweets.length;
-
-            var newRepeatedWords = this.repeatedWords[index];
-            this.repeatedWords.splice(index , 0 , newRepeatedWords);
-          }
-      }); 
-    }
-
     deleteTweet(index: string){
       console.log("DELETE TWEET: " + index);
       console.log(this.tweets[index]);
 
       
       var popupData = {
-          windowMessage : "Borrar registro",
-          popupMessage : "¿Estás seguro de borrar el registro " + this.tweets[index].id + "?",
-          actionButtonMessage: "Borrar",
-          cancelButtonMessage: "Cancelar",
-          showCancelButton: true
+        windowMessage : "Borrar registro",
+        popupMessage : "¿Estás seguro de borrar el registro " + this.tweets[index].id + "?",
+        actionButtonMessage: "Borrar",
+        cancelButtonMessage: "Cancelar",
+        showCancelButton: true
       };
 
       let dialogRef = this.dialog.open(GenericPopupComponent, {data: popupData});
@@ -167,34 +128,62 @@ export class TweetShowGrid implements OnInit {
       });
     }
 
-    private cloneTweetServiceCall(index: string){
-      console.log("Llamar al servicio de clonado con id: " + this.tweets[index].id);
-      var newId = "25";
-      //cambiar este método
-      /*this.tweet.cloneTweetById(this.tweets[index].id).subscribe((result) => {
-        //Quitar el registro de la vista.
-        this.tweets.splice(parseInt(index) , 1);
-        this.tweetsLength = this.tweets.length;
-        
-        //mostrar mensaje de éxito
-        var popupData = {
-          windowMessage : "Clonar registro",
-          popupMessage : "Registro clonado correctamente. Nuevo ID: " + result.id,
-          actionButtonMessage: "Aceptar",
-          showCancelButton: false
-        };
+    cloneTweet(index){
+      var popupData = {
+        windowMessage : "Clonar registro",
+        popupMessage : "¿Estás seguro de clonar el registro " + this.tweets[index].id + "?",
+        actionButtonMessage: "Clonar",
+        cancelButtonMessage: "Cancelar",
+        showCancelButton: true
+      };
 
-        let dialogRef = this.dialog.open(GenericPopupComponent, {data: popupData});
+      let dialogRef = this.dialog.open(GenericPopupComponent, {data: popupData});
 
-        newId = result.id
-      }, (err) => {
-        console.log("Error clonando el tweet " + err.message);
-      });*/
+      dialogRef.afterClosed().subscribe(result => {
+          console.log("Botón presionado: " + result);
 
-      return newId;
+          if(result == "action"){
+            this.cloneTweetServiceCall(index).subscribe((result) => {
+              console.log(result);
+              //mostrar mensaje de éxito
+              var popupData = {
+                windowMessage : "Clonar registro",
+                popupMessage : "Registro clonado correctamente. Nuevo ID: " + result.id,
+                actionButtonMessage: "Aceptar",
+                showCancelButton: false
+              };
+
+              let dialogRef = this.dialog.open(GenericPopupComponent, {data: popupData});
+            
+              var clonedTweet = {
+                id : result.id,
+                eventdate : this.tweets[index].eventdate,
+                tweet : this.tweets[index].tweet,
+                priority : this.tweets[index].priority,
+                cloned: true
+              }
+  
+              console.log(clonedTweet);
+  
+              this.tweets.splice(index, 0, clonedTweet);
+              this.tweetsLength = this.tweets.length;
+  
+              var newRepeatedWords = this.repeatedWords[index];
+              this.repeatedWords.splice(index , 0 , newRepeatedWords);
+            });
+          }
+      }); 
     }
 
+    private cloneTweetServiceCall(index: string){
+      console.log("Llamar al servicio de clonado con id: " + this.tweets[index].id);
     
+      var id = {
+        id: this.tweets[index].id.toString()
+      }
+
+      return this.tweet.cloneTweetById(id as any);
+    }
 
     ngOnInit() {}
 }

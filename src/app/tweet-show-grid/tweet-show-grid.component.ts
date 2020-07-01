@@ -113,6 +113,8 @@ export class TweetShowGrid implements OnInit {
         //Quitar el registro de la vista.
         this.tweets.splice(parseInt(index) , 1);
         this.tweetsLength = this.tweets.length;
+        //Borrar el registro de palabras duplicadas
+        this.repeatedWords.splice(parseInt(index) , 1);
         
         //mostrar mensaje de éxito
         var popupData = {

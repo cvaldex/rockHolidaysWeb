@@ -9,7 +9,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 
 import { TweetUpdateComponent } from '../tweet-update/tweet-update.component';
 import { GenericPopupComponent } from '../generic-popup/generic-popup.component';
-import { ImageGallery } from '../image-gallery/image-gallery.component';
+import { ImageGallery } from '../images/image-gallery/image-gallery.component';
 
 import {RepeatedWordsUtil} from '../util/repeated-words-util';
 

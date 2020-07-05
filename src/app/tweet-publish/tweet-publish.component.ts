@@ -11,25 +11,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TweetPublishComponent implements OnInit {
     someError: Boolean = false;
     errorMessage = "";
+    success: Boolean = false;
+    publishedTweets: String = "";
 
     @Input() tweetData = { };
 
     constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router) { }
 
-    ngOnInit() {
-        //this.tweetData.priority='2'; //default para el option
-        //this.tweetData.author = 'cvaldex@gmail.com';
-    }
+    ngOnInit() {}
 
     publishTweet() {
+        this.success = false; //borrar el alert con el mensaje
+        this.someError = false; //borrar el alert de error
 
         this.tweet.publishTweet(this.tweetData).subscribe((result) => {
-            console.log("Result: " + result);
-            this.router.navigate(['/tweet-publish-success/'+result.resultsFound]);
+            console.log(result);
+            this.publishedTweets = result.resultsFound;
+            this.success = true; //activar el alert de éxito
         }, (err) => {
             console.log("Error: " + err.message);
+            console.log(err);
             this.someError = true;
-            this.errorMessage = err.message;
+            this.errorMessage = err.error.errorMessage;
         });
     }
 }

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { GenericPopupComponent } from '../generic-popup/generic-popup.component';
-import { ImageGallery } from '../image-gallery/image-gallery.component';
+import { ImageGallery } from '../images/image-gallery/image-gallery.component';
 
 
 @Component({

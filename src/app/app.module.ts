@@ -8,12 +8,8 @@ import { TweetComponent } from './tweet/tweet.component';
 
 import { TweetAddComponent } from './tweet-add/tweet-add.component';
 import { TweetAddSuccessComponent } from './tweet-add-success/tweet-add-success.component';
-
 import { TweetPublishComponent } from './tweet-publish/tweet-publish.component';
-import { TweetPublishSuccessComponent } from './tweet-publish-success/tweet-publish-success.component';
-
 import { TweetUpdateComponent } from './tweet-update/tweet-update.component';
-
 import { TweetSearchByDate } from './tweet-search-by-date/tweet-search-by-date.component';
 import { TweetShowGrid } from './tweet-show-grid/tweet-show-grid.component';
 import { TweetSearchByDateHolder } from './tweet-search-by-date-holder/tweet-search-by-date-holder.component';
@@ -22,8 +18,8 @@ import { TweetSearchByTextHolder } from './tweet-search-by-text-holder/tweet-sea
 
 import {GenericPopupComponent} from './generic-popup/generic-popup.component';
 
-import{ImageGallery} from './image-gallery/image-gallery.component';
-import{ImageUpload} from './image-upload/image-upload.component';
+import{ImageGallery} from './images/image-gallery/image-gallery.component';
+import{ImageUpload} from './images/image-upload/image-upload.component';
 
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule , FormBuilder } from '@angular/forms';
@@ -47,11 +43,6 @@ const appRoutes: Routes = [
       path: 'publishTweet',
       component: TweetPublishComponent,
       data: { title: 'Tweet Publish' }
-  },
-  {
-      path: 'tweet-publish-success/:id',
-      component: TweetPublishSuccessComponent,
-      data: { title: 'Tweet Published Succesfully' }
   },
   {
       path: 'tweet-search-by-date',
@@ -88,7 +79,6 @@ const appRoutes: Routes = [
     component: ImageUpload,
     data: { title: 'Image Upload' }
   }
-
 ];
 
 @NgModule({
@@ -98,7 +88,6 @@ const appRoutes: Routes = [
     TweetAddComponent,
     TweetAddSuccessComponent,
     TweetPublishComponent,
-    TweetPublishSuccessComponent,
     TweetSearchByDate,
     TweetShowGrid,
     TweetSearchByDateHolder,

@@ -26,7 +26,9 @@ export class TweetPublishComponent implements OnInit {
 
         this.tweet.publishTweet(this.tweetData).subscribe((result) => {
             console.log(result);
-            this.publishedTweets = result.resultsFound;
+            var resultsFound = JSON.parse(result).resultsFound;
+            console.log("--->" + resultsFound)
+            this.publishedTweets = resultsFound;
             this.success = true; //activar el alert de éxito
         }, (err) => {
             console.log("Error: " + err.message);

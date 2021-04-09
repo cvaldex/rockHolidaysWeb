@@ -40,7 +40,7 @@ import { map, catchError, tap } from 'rxjs/operators';
     publishTweet (tweet): Observable<any> {
         console.log("TweetService.publishTweet" + tweet);
         return this.http.post<any>(publishEndpoint + 'publish', JSON.stringify(tweet), httpOptions).pipe(
-            tap((tweet) => console.log(`published tweet w/ id=${tweet.resultsFound}`))
+            tap((tweet) => console.log(JSON.parse(tweet).resultsFound))
         );
     }
 

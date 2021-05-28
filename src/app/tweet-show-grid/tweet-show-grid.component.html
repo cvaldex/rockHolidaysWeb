@@ -18,12 +18,15 @@
         <div class="alert alert-success" role="alert" *ngIf="tweet.cloned">
           <img src="assets/img/warning.png"/> Clonado
         </div>
+        <div class="alert alert-danger" role="alert" *ngIf="evaluateForbiddenChars(tweet.tweet)">
+          ¡Caracteres especiales!
+        </div>
       </td>
       <td>
         <p>{{ tweet.tweet }}</p>
         <div class="alert alert-warning" role="alert" *ngIf="repeatedWords[i].length > 0">
           Palabras repetidas: {{repeatedWords[i]}}
-        </div> 
+        </div>
         <p>
           <img class="ml-4" (click)="updateTweet(i)" src="assets/img/pencil.png"/>
           <img class="ml-4" (click)="deleteTweet(i)" src="assets/img/delete.png"/>

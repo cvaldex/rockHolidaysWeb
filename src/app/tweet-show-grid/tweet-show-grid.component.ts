@@ -187,5 +187,9 @@ export class TweetShowGrid implements OnInit {
       return this.tweet.cloneTweetById(id as any);
     }
 
+    private evaluateForbiddenChars(text: string){
+      return (text.includes('“') || text.includes('”'));
+    }
+
     ngOnInit() {}
 }

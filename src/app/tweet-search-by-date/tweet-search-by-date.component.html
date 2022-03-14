@@ -10,7 +10,7 @@
           <button (click)="searchTweetByDate()" class="btn btn-primary btn-md" type="submit">Buscar Spinner</button>
         </div>
       </div>
-    </div> 
+    </div>
 </form>
 
 <div class="alert alert-warning" role="alert" *ngIf="hasNoRecordsFound">
@@ -21,17 +21,6 @@
   <div class="alert alert-danger"  role="alert">
     {{ errorMessage }}
   </div>
-</div>
-
-<div *ngIf="isLoading == undefined || isLoading" class="container-fluid main_container d-flex">
-
-  <!-- call and custom spinner -->
-  <app-semipolar-spinner
-  [animationDuration]="1500"
-  [size]="70"
-  [color]="'#C468CF'">
- </app-semipolar-spinner>
-
 </div>
 
 </div>

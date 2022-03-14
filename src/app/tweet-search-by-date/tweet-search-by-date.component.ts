@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { TweetService } from '../tweet.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SemipolarSpinnerModule } from "angular-epic-spinners";
 
 import { MessageService } from '../services/index';
 
@@ -15,7 +14,6 @@ export class TweetSearchByDate implements OnInit {
     someError: Boolean = false;
     errorMessage = "";
     hasNoRecordsFound: Boolean = false;
-    isLoading = false;
 
     @Output()
     populateGrid = new EventEmitter<string>();
@@ -52,24 +50,19 @@ export class TweetSearchByDate implements OnInit {
         this.someError = false; //limpiar mensaje en caso de múltiples búsquedas
 
         console.log("Fecha de busqueda: " + this.searchData.date);
-        this.isLoading = true;
-        console.log("isLoading: " + this.isLoading);
+
         this.tweet.searchTweetByDate(this.searchData).subscribe((result) => {
             //console.log("Result in search: " + result.length);
             if(result.length == 0){
                 this.hasNoRecordsFound = true;
             }
-            this.sendMessage(result);
-            //this.isLoading = false;
-            console.log("true: isLoading: " + this.isLoading);
+            this.sendMessage(result);    
         }, (err) => {
             console.log("Error--->" + err.message);
             console.log("------------");
             console.log(err);
             this.someError = true;
             this.errorMessage = err.message;
-            //this.isLoading = false;
-            console.log("false: isLoading: " + this.isLoading);
         });
     }
 

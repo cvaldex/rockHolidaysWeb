@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-prod": "ng build --prod --baseHref='https://cvaldex.github.io/rockHolidaysWeb/'"
+    "build-prod": "ng build --configuration=production --baseHref='https://cvaldex.github.io/rockHolidaysWeb/'"
   },
   "private": true,
   "dependencies": {

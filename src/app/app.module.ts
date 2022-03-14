@@ -28,8 +28,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDialogModule} from '@angular/material/dialog';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-import { SemipolarSpinnerModule } from "angular-epic-spinners";
-
 const appRoutes: Routes = [
   {
       path: 'tweet-add-success/:id',
@@ -107,8 +105,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     NoopAnimationsModule,
     MatDialogModule,
-    NgbModule,
-    SemipolarSpinnerModule
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent],

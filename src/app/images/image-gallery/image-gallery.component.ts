@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { ImagesService } from '../../images.service';
+import { ImagesService } from '../../api-services/images.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SafeResourceUrl } from '@angular/platform-browser';
@@ -24,11 +24,11 @@ export class ImageGallery implements OnInit {
     areImagesLoaded: Boolean = false; //variable que controla si las imagenes están cargadas o no
     ACTION_UPDATE_IMAGE: string = "update";
     ACTION_ADD_IMAGE: string = "add";
-    
-    constructor(public imagesService:ImagesService, private route: ActivatedRoute, private router: Router, 
+
+    constructor(public imagesService:ImagesService, private route: ActivatedRoute, private router: Router,
       public dialogRef: MatDialogRef<ImageGallery>, @Inject(MAT_DIALOG_DATA) public data: any,
       private sanitizer: DomSanitizer, public dialog: MatDialog) {
-      
+
         this.id = this.data.id;
         console.log("Se cargarán imagenes del registro: " + this.id);
 
@@ -46,12 +46,12 @@ export class ImageGallery implements OnInit {
       if(base64Image == null){ //si la imagen es nula no se procesa
         return;
       }
-      
+
       if(this.isBase64(base64Image)){
         var newImage = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + base64Image);
         this.images.push(newImage);
 
-        this.loadImage(base64Image).then(image => {this.calculateSize(image)}).catch(err => console.error(err)); 
+        this.loadImage(base64Image).then(image => {this.calculateSize(image)}).catch(err => console.error(err));
       }
     }
 
@@ -59,9 +59,9 @@ export class ImageGallery implements OnInit {
       if(input == null){
         return false;
       }
-      
+
       var result = true;
-      
+
       try {
         window.atob(input);
       } catch(e) {
@@ -83,7 +83,7 @@ export class ImageGallery implements OnInit {
 
     private calculateSize(img: any){
       //this.areImagesLoaded = false;
-      
+
       var imageSize = {
         width: img.naturalWidth,
         height: img.naturalHeight
@@ -107,7 +107,7 @@ export class ImageGallery implements OnInit {
       if(action != this.ACTION_UPDATE_IMAGE && action != this.ACTION_ADD_IMAGE){
         return new Error("Invalid image change option!: " + action);
       }
-      
+
       var popupData = {
         id: this.id,
         imageIndex: parseInt(imageId) + 1
@@ -123,7 +123,7 @@ export class ImageGallery implements OnInit {
               var index = parseInt(imageId);
               //Reemplazar la imagen en la galería actual, tras el ingreso a la BD
               this.images[index] = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + result.image);
-              
+
               this.loadImage(result.image).then(image => {
                 var img = image as HTMLImageElement;
 
@@ -131,7 +131,7 @@ export class ImageGallery implements OnInit {
                   width: img.naturalWidth,
                   height: img.naturalHeight
                 }
-                
+
                 this.imagesSizes[index] = imageSize;
               }).catch(err => console.error(err));
 
@@ -142,6 +142,6 @@ export class ImageGallery implements OnInit {
           }
       });
     }
-    
+
     ngOnInit() {}
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { TweetService } from '../tweet.service';
+import { TweetService } from '../api-services/tweet.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MessageService } from '../services/index';
@@ -56,7 +56,7 @@ export class TweetSearchByDate implements OnInit {
             if(result.length == 0){
                 this.hasNoRecordsFound = true;
             }
-            this.sendMessage(result);    
+            this.sendMessage(result);
         }, (err) => {
             console.log("Error--->" + err.message);
             console.log("------------");

@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { TweetComponent } from './tweet/tweet.component';
 
 import { TweetAddComponent } from './tweet-add/tweet-add.component';
-import { TweetAddSuccessComponent } from './tweet-add-success/tweet-add-success.component';
 import { TweetPublishComponent } from './tweet-publish/tweet-publish.component';
 import { TweetUpdateComponent } from './tweet-update/tweet-update.component';
 import { TweetSearchByDate } from './tweet-search-by-date/tweet-search-by-date.component';
@@ -21,6 +20,8 @@ import {GenericPopupComponent} from './generic-popup/generic-popup.component';
 import{ImageGallery} from './images/image-gallery/image-gallery.component';
 import{ImageUpload} from './images/image-upload/image-upload.component';
 
+import{PageNotFoundComponent} from './404-page-not-found/404-page-not-found.component';
+
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule , FormBuilder } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,11 +30,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
-  {
-      path: 'tweet-add-success/:id',
-      component: TweetAddSuccessComponent,
-      data: { title: 'Tweet Added Succesfully' }
-  },
   {
       path: 'addTweet',
       component: TweetAddComponent,
@@ -78,7 +74,10 @@ const appRoutes: Routes = [
     path: 'imageUpload',
     component: ImageUpload,
     data: { title: 'Image Upload' }
-  }
+  },
+  {
+    path: '**', pathMatch: 'full',
+    component: PageNotFoundComponent },
 ];
 
 @NgModule({
@@ -86,7 +85,6 @@ const appRoutes: Routes = [
     AppComponent,
     TweetComponent,
     TweetAddComponent,
-    TweetAddSuccessComponent,
     TweetPublishComponent,
     TweetSearchByDate,
     TweetShowGrid,
@@ -96,7 +94,8 @@ const appRoutes: Routes = [
     TweetUpdateComponent,
     GenericPopupComponent,
     ImageGallery,
-    ImageUpload
+    ImageUpload,
+    PageNotFoundComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

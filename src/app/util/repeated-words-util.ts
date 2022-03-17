@@ -1,5 +1,5 @@
 //import WhitelistJson from '../../assets/static-json/repeated-words-whitelist.json';
-import { RepeatedWordsWhitelistService } from '../repeated-words-whitelist.service';
+import { RepeatedWordsWhitelistService } from '../api-services/repeated-words-whitelist.service';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -27,7 +27,7 @@ export class RepeatedWordsUtil {
     getRepeatedWords(text: string){
         var words = text != null ? text.trim().split(' ') : [];
         //cargar el mapa de palabras con la whitelist inicial
-        var allWords = this.getMapWithWhiteListWords();  
+        var allWords = this.getMapWithWhiteListWords();
 
         words.forEach(word => {
             var key = this.getCleanKeyFromWord(word).toLowerCase().trim(); //validate lower or upper case
@@ -45,7 +45,7 @@ export class RepeatedWordsUtil {
 
         for (var key of allWords.keys()) {
             var value = allWords.get(key);
-            
+
             if(value > 1){
                 repeatedWords.push(key);
             }
@@ -91,4 +91,3 @@ export class RepeatedWordsUtil {
         return whiteListWordsMap;
     }
 }
-

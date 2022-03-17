@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TweetService } from '../tweet.service';
+import { TweetService } from '../api-services/tweet.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -49,32 +49,32 @@ export class TweetShowGrid implements OnInit {
     avoidDuplicates(text: string){
       var repeateadWords = this.rwu.getRepeatedWords(text);
       var repeatedWordsString = "";
-      
+
       repeateadWords.forEach(word => {
           repeatedWordsString = repeatedWordsString + " " + word;
       });
 
-      return repeatedWordsString.trim(); 
+      return repeatedWordsString.trim();
     }
 
     updateTweet(index){
       console.log("UPDATE TWEET: " + index);
       console.log(this.tweets[index]);
-      
+
       let dialogRef = this.dialog.open(TweetUpdateComponent, {data: this.tweets[index]});
 
       dialogRef.afterClosed().subscribe(result => {
         console.log("Dialog cerrado");
         console.log(this.tweets[index]);
         this.repeatedWords[index] = this.avoidDuplicates(this.tweets[index].tweet);
-      }); 
+      });
     }
 
     deleteTweet(index: string){
       console.log("DELETE TWEET: " + index);
       console.log(this.tweets[index]);
 
-      
+
       var popupData = {
         windowMessage : "Borrar registro",
         popupMessage : "¿Estás seguro de borrar el registro " + this.tweets[index].id + "?",
@@ -115,7 +115,7 @@ export class TweetShowGrid implements OnInit {
         this.tweetsLength = this.tweets.length;
         //Borrar el registro de palabras duplicadas
         this.repeatedWords.splice(parseInt(index) , 1);
-        
+
         //mostrar mensaje de éxito
         var popupData = {
           windowMessage : "Borrar registro",
@@ -156,7 +156,7 @@ export class TweetShowGrid implements OnInit {
               };
 
               let dialogRef = this.dialog.open(GenericPopupComponent, {data: popupData});
-            
+
               var clonedTweet = {
                 id : result.id,
                 eventdate : this.tweets[index].eventdate,
@@ -164,22 +164,22 @@ export class TweetShowGrid implements OnInit {
                 priority : this.tweets[index].priority,
                 cloned: true
               }
-  
+
               console.log(clonedTweet);
-  
+
               this.tweets.splice(index, 0, clonedTweet);
               this.tweetsLength = this.tweets.length;
-  
+
               var newRepeatedWords = this.repeatedWords[index];
               this.repeatedWords.splice(index , 0 , newRepeatedWords);
             });
           }
-      }); 
+      });
     }
 
     private cloneTweetServiceCall(index: string){
       console.log("Llamar al servicio de clonado con id: " + this.tweets[index].id);
-    
+
       var id = {
         id: this.tweets[index].id.toString()
       }

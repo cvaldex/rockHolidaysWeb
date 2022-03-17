@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ViewChildren, ElementRef } from '@angular/core';
-import { TweetService } from '../tweet.service';
+import { TweetService } from '../api-services/tweet.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
@@ -28,7 +28,7 @@ export class TweetAddComponent implements OnInit {
     public priorities:Array<string> = ['0', '1', '2', '3', '4'];
     tweetId = "";
     whiteListWords = [];
-    
+
     newTweetForm: NgForm;
     inputFile;
 
@@ -56,7 +56,7 @@ export class TweetAddComponent implements OnInit {
             console.log("Result: " + result);
             this.tweetId = result.id;
             this.success = true;
-            
+
             this.showOKPopup();
 
         }, (err) => {
@@ -161,7 +161,7 @@ export class TweetAddComponent implements OnInit {
         this.inputFile.value = "";
         this.hasRepeatedWords = false;
         this.newTweetForm.resetForm();
-        
+
         //volver la prioridad al valor por defecto
         this.newTweetForm.form.controls['tweetData.priority'].setValue("2");
     }
@@ -169,8 +169,8 @@ export class TweetAddComponent implements OnInit {
     /*avoidDuplicates(){
         var words = this.tweetData.text != null ? this.tweetData.text.trim().split(' ') : [];
         //cargar el mapa de palabras con la whitelist inicial
-        var allWords = this.getMapWithWhiteListWords();  
-        
+        var allWords = this.getMapWithWhiteListWords();
+
         this.repeatedWords = "";
         this.hasRepeatedWords = false;
 
@@ -188,7 +188,7 @@ export class TweetAddComponent implements OnInit {
 
         for (var key of allWords.keys()) {
             var value = allWords.get(key);
-            
+
             if(value > 1){
                 this.hasRepeatedWords = true;
                 this.repeatedWords = this.repeatedWords + " " + key;
@@ -201,7 +201,7 @@ export class TweetAddComponent implements OnInit {
         this.repeatedWords = "";
 
         var repeateadWords = this.rwu.getRepeatedWords(this.tweetData.text);
-        
+
         repeateadWords.forEach(word => {
             this.hasRepeatedWords = true;
             this.repeatedWords = this.repeatedWords + " " + word;

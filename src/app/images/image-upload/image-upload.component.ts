@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { ImagesService } from '../../images.service';
+import { ImagesService } from '../../api-services/images.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SafeResourceUrl } from '@angular/platform-browser';
@@ -25,10 +25,10 @@ export class ImageUpload implements OnInit {
     errorMessage: string;
     reader: FileReader;
 
-    constructor(public imagesService:ImagesService, private route: ActivatedRoute, private router: Router, 
+    constructor(public imagesService:ImagesService, private route: ActivatedRoute, private router: Router,
       public dialogRef: MatDialogRef<ImageUpload>, @Inject(MAT_DIALOG_DATA) public data: any,
       private sanitizer: DomSanitizer) {
-      
+
         this.id = this.data.id;
         this.imageIndex = this.data.imageIndex;
         console.log(`Se cargará la imagen ${this.imageIndex} del registro: ${this.id}`);
@@ -40,14 +40,14 @@ export class ImageUpload implements OnInit {
       //Validar que el peso de los archivos es el correcto
 
       this.someError = false; //resetear para ocultar el label de error
-      
+
       this.reader = new FileReader();
 
       this.reader.onload = function(e){
 
         console.log("Archivo cargado");
       }
-      
+
       /*
       Esto se puede mejorar claramente!
       */
@@ -77,7 +77,7 @@ export class ImageUpload implements OnInit {
         imageId: this.imageIndex.toString(),
         image : this.uploadedImage
       }
-      
+
       this.imagesService.updateImage(dataToUpdate).subscribe((result) => {
         console.log(result);
 
@@ -85,7 +85,7 @@ export class ImageUpload implements OnInit {
           action : "updated",
           image : this.uploadedImage
         }
-  
+
         this.dialogRef.close(returnData);
     }, (err) => {
       console.log("Error--->" + err.message);
@@ -93,7 +93,7 @@ export class ImageUpload implements OnInit {
       this.errorMessage = err.message;
     });
 
-      
+
     }
 
     closeDialog(action: string){
@@ -101,10 +101,10 @@ export class ImageUpload implements OnInit {
         action : action,
         image : ""
       }
-      
+
       this.dialogRef.close(returnData);
     }
-    
+
     ngOnInit() {}
 
     /*
@@ -119,6 +119,6 @@ export class ImageUpload implements OnInit {
 
       return !base64regex.test(input);
     }
-    
-    */ 
+
+    */
 }

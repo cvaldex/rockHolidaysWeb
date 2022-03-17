@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { TweetService } from '../tweet.service';
+import { TweetService } from '../api-services/tweet.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
@@ -22,24 +22,24 @@ export class TweetUpdateComponent implements OnInit {
     errorMessage = "";
 
     repeatedWords: String = "";
-    
+
     public priorities:Array<string> = ['0', '1', '2', '3', '4'];
 
     @Input() tweetData = { id:'', tweet:'', eventDate: '', author: '', priority: '', image1: '', image2: '', image3: '', image4: '' };
 
-    constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, 
+    constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router,
         public dialogRef: MatDialogRef<TweetUpdateComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private rwu: RepeatedWordsUtil) { }
 
     ngOnInit() {
         const tweetToUpdate = this.data;
 
         console.log("ID a actualizar" + tweetToUpdate.id);
-    
+
         this.tweetData.id = tweetToUpdate.id.toString();
         this.tweetData.tweet = tweetToUpdate.tweet.trim();
         this.tweetData.eventDate = tweetToUpdate.eventdate.substring(0,10);
         this.tweetData.priority = tweetToUpdate.priority.toString();
-        
+
         //precargar las palabras duplicadas que pueden venir en el tweet guardado
         this.avoidDuplicates();
     }
@@ -48,7 +48,7 @@ export class TweetUpdateComponent implements OnInit {
         this.repeatedWords = "";
 
         var repeateadWords = this.rwu.getRepeatedWords(this.tweetData.tweet);
-        
+
         repeateadWords.forEach(word => {
             this.repeatedWords = this.repeatedWords + " " + word;
         });
@@ -74,7 +74,7 @@ export class TweetUpdateComponent implements OnInit {
 
     close() {
         this.dialogRef.close();
-    }       
+    }
 
     hideAlert(alertType: string){
         if(alertType == 'success'){

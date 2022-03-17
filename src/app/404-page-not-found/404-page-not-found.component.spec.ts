@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TweetAddSuccessComponent } from './tweet-add-success.component';
+import { PageNotFoundComponent } from './404-page-not-found.component';
 
-describe('TweetAddSuccessComponent', () => {
-  let component: TweetAddSuccessComponent;
-  let fixture: ComponentFixture<TweetAddSuccessComponent>;
+describe('PageNotFoundComponent', () => {
+  let component: PageNotFoundComponent;
+  let fixture: ComponentFixture<PageNotFoundComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TweetAddSuccessComponent ]
+      declarations: [ PageNotFoundComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TweetAddSuccessComponent);
+    fixture = TestBed.createComponent(PageNotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

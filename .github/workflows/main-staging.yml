@@ -1,0 +1,43 @@
+name: Staging Deployment
+
+on:
+  push:
+    branches: [ staging ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.18.0]
+        
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Cache node modules
+      uses: actions/cache@v2
+      with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            
+    - name: Staging Build
+      run: |
+          npm ci
+          npm run build-prod
+        
+    - name: Deploy to Stage
+      uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.2
+      with:
+        github_access_token: ${{ secrets.ACCESS_TOKEN }}
+        build_configuration: production # The build environment for the app. please look configurations in your angular.json
+        base_href: /rockHolidaysWeb-staging/ # make sure this corresponds to https://<your_username>.github.io/<base_href>/
+        deploy_branch: gh-pages-staging #The branch the action should deploy to.
+        angular_dist_build_folder: dist/rockHolidaysWeb-staging # The folder where your project is supposed to be after running ng build by the action.

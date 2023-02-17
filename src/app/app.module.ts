@@ -82,35 +82,32 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TweetComponent,
-    TweetAddComponent,
-    TweetAddSuccessComponent,
-    TweetPublishComponent,
-    TweetSearchByDate,
-    TweetShowGrid,
-    TweetSearchByDateHolder,
-    TweetSearchByText,
-    TweetSearchByTextHolder,
-    TweetUpdateComponent,
-    GenericPopupComponent,
-    ImageGallery,
-    ImageUpload
-  ],
-  imports: [
-    RouterModule.forRoot(appRoutes),
-    FormsModule,
-    BrowserModule,
-    HttpClientModule,
-    NoopAnimationsModule,
-    MatDialogModule,
-    NgbModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    GenericPopupComponent
-]
+    declarations: [
+        AppComponent,
+        TweetComponent,
+        TweetAddComponent,
+        TweetAddSuccessComponent,
+        TweetPublishComponent,
+        TweetSearchByDate,
+        TweetShowGrid,
+        TweetSearchByDateHolder,
+        TweetSearchByText,
+        TweetSearchByTextHolder,
+        TweetUpdateComponent,
+        GenericPopupComponent,
+        ImageGallery,
+        ImageUpload
+    ],
+    imports: [
+        RouterModule.forRoot(appRoutes),
+        FormsModule,
+        BrowserModule,
+        HttpClientModule,
+        NoopAnimationsModule,
+        MatDialogModule,
+        NgbModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

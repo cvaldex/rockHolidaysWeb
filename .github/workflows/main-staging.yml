@@ -11,10 +11,10 @@ jobs:
     strategy:
       matrix:
         node-version: [16.18.0]
-        
+
     steps:
     - uses: actions/checkout@v2
-      
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -27,12 +27,12 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-            
+
     - name: Staging Build
       run: |
           npm ci
-          npm run build-prod
-        
+          npm run build-staging
+
     - name: Deploy to Stage
       uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.2
       with:

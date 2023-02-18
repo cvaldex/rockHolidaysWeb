@@ -1,4 +1,4 @@
-name: Staging Deployment
+name: Stage Deployment
 
 on:
   push:
@@ -11,10 +11,10 @@ jobs:
     strategy:
       matrix:
         node-version: [16.18.0]
-        angular-version: [13.0.x]
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
       with:
         ref: staging
 
@@ -22,11 +22,6 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        
-    #- name: Use Angular ${{ matrix.angular-version }}
-    #  uses: ngworker/angular-versions-action@v4
-    #  with:
-    #    angular-version: ${{ matrix.angular-version }}
 
     - name: Cache node modules
       uses: actions/cache@v3
@@ -40,13 +35,13 @@ jobs:
       run: |
           #npm ci
           npm install
-          npm run build-staging
+          npm run build-stage
 
     - name: Deploy to Stage
       uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.2
       with:
         github_access_token: ${{ secrets.ACCESS_TOKEN }}
-        build_configuration: staging # The build environment for the app. please look configurations in your angular.json
-        base_href: /rockHolidaysWeb-staging/ # make sure this corresponds to https://<your_username>.github.io/<base_href>/
-        deploy_branch: gh-pages-staging #The branch the action should deploy to.
-        angular_dist_build_folder: dist/rockHolidaysWeb-staging # The folder where your project is supposed to be after running ng build by the action.
+        build_configuration: stage # The build environment for the app. please look configurations in your angular.json
+        base_href: /rockHolidaysWeb-stage/ # make sure this corresponds to https://<your_username>.github.io/<base_href>/
+        deploy_branch: gh-pages-stage #The branch the action should deploy to.
+        angular_dist_build_folder: dist/rockHolidaysWeb-stage # The folder where your project is supposed to be after running ng build by the action.

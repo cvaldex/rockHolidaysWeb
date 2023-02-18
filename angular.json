@@ -60,13 +60,14 @@
                 }
               ]
             },
-            "staging": {
+            "stage": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.staging.ts"
+                  "with": "src/environments/environment.stage.ts"
                 }
               ],
+              "outputPath": "dist/rockHolidaysWeb-stage",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,

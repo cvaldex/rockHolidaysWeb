@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         node-version: [16.18.0]
+        angular-version: [14.2.6]
 
     steps:
     - uses: actions/checkout@v3
@@ -21,6 +22,11 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+        
+    - name: Use Angular ${{ matrix.angular-version }}
+      uses: ngworker/angular-versions-action@v4
+      with:
+        angular-version: ${{ matrix.angular-version }}
 
     - name: Cache node modules
       uses: actions/cache@v3

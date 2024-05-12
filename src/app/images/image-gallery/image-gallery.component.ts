@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewEncapsulation } from '@angular/core';
 import { ImagesService } from '../../images.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -13,6 +13,7 @@ import {ImageUpload} from '../image-upload/image-upload.component';
 @Component({
     selector: 'app-image-gallery',
     templateUrl: './image-gallery.component.html',
+    encapsulation: ViewEncapsulation.None,
     styleUrls: ['./image-gallery.component.css']
 })
 
@@ -33,10 +34,15 @@ export class ImageGallery implements OnInit {
         console.log("Se cargarán imagenes del registro: " + this.id);
 
         this.imagesService.getImages(this.id).subscribe((result) => {
+          console.log("--------------");
+          console.log(result);
+          console.log("--------------");
           this.addImageToArrayIfIsBase64(result[0].image1);
           this.addImageToArrayIfIsBase64(result[0].image2);
           this.addImageToArrayIfIsBase64(result[0].image3);
           this.addImageToArrayIfIsBase64(result[0].image4);
+
+          console.log(this.imagesSizes);
         }, (err) => {
           console.log("Error--->" + err.message);
         });
@@ -47,6 +53,8 @@ export class ImageGallery implements OnInit {
         return;
       }
       
+      console.log("this.isBase64(base64Image)" + this.isBase64(base64Image));
+
       if(this.isBase64(base64Image)){
         var newImage = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + base64Image);
         this.images.push(newImage);
@@ -82,8 +90,6 @@ export class ImageGallery implements OnInit {
     }
 
     private calculateSize(img: any){
-      //this.areImagesLoaded = false;
-      
       var imageSize = {
         width: img.naturalWidth,
         height: img.naturalHeight
@@ -141,6 +147,11 @@ export class ImageGallery implements OnInit {
             }
           }
       });
+    }
+
+    imageIndex = 0;
+    private log(image){
+      console.log("Index imagen: " + this.imageIndex++);
     }
     
     ngOnInit() {}

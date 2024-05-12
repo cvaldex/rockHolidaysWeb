@@ -4,18 +4,15 @@
 </div>
 
 <!-- Mostrar el carrusel cuando se hayan cargado las imágenes y los tamaños de estas también -->
-<ngb-carousel data-interval="false" *ngIf="areImagesLoaded && (images.length == imagesSizes.length)"> 
-  <div *ngFor="let image of images; index as i">
-    <ng-template ngbSlide>
+<ngb-carousel [wrap]="true" [animation]="false" [interval]="30000" *ngIf="areImagesLoaded && (images.length == imagesSizes.length)"> 
+  <ng-template ngbSlide *ngFor="let image of images; let i = index;">
       <div class="picsum-img-wrapper">
         <img [src]="image" class="custom-image">
       </div>
       <div class="carousel-caption">
         <p class="text-warning bg-dark font-weight-lighter h6">Imagen {{i+1}} ({{imagesSizes[i].width}} x {{imagesSizes[i].height}})<img class="m-2" (click)="updateImage(i)" src="assets/img/pencil.png"/></p>
       </div>
-    </ng-template>
-  </div>
-  
+  </ng-template>
 </ngb-carousel>
 
 <!-- Mostrar el icono para cargar imágenes si es que hay menos de cuatro en el registro -->

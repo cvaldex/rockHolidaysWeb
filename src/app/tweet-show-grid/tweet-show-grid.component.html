@@ -15,6 +15,13 @@
         ID: {{ tweet.id }}<br/>
         Prioridad: {{ tweet.priority }}<br/>
         Fecha: {{ tweet.eventdate.substring(0,10) | date:'yyyy/MM/dd' }}<br/>
+
+       <!-- Esto funciona para la versión de Bootstrap 4.6.2 que usa el sitio --> 
+        <div class="custom-control custom-switch">
+          <input type="checkbox" class="custom-control-input" id="publishCheck_{{ tweet.id }}" [checked]="tweet.is_publishable" (click)="changePublishableState( tweet.id )"/>
+          <label class="custom-control-label" for="publishCheck_{{ tweet.id }}">¿Publicar?</label>
+        </div>
+        
         <div class="alert alert-success" role="alert" *ngIf="tweet.cloned">
           <img src="assets/img/warning.png"/> Clonado
         </div>

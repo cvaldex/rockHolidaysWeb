@@ -191,5 +191,9 @@ export class TweetShowGrid implements OnInit {
       return (text.includes('“') || text.includes('”') || text.includes('’'));
     }
 
+    changePublishableState(id: string){
+      console.log("id: " + id);
+    }
+
     ngOnInit() {}
 }

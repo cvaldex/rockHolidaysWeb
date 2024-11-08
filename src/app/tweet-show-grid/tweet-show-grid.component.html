@@ -1,6 +1,6 @@
 <div class="container">
   <h3>Resultado Búsqueda</h3>
-  <p>Cantidad de registros: {{ tweetsLength }}</p>
+  <p>Cantidad de registros: {{ tweetsLength }}&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;Registros publicables: {{ publishableRecords }}</p>
 <div class="table-responsive">
   <table class="table table-striped">
   <thead>
@@ -18,7 +18,7 @@
 
        <!-- Esto funciona para la versión de Bootstrap 4.6.2 que usa el sitio --> 
         <div class="custom-control custom-switch">
-          <input type="checkbox" class="custom-control-input" id="publishCheck_{{ tweet.id }}" [checked]="tweet.is_publishable" (click)="changePublishableState( tweet.id )"/>
+          <input type="checkbox" class="custom-control-input" id="publishCheck_{{ tweet.id }}" [checked]="tweet.is_publishable" (click)="changePublishableState( i )"/>
           <label class="custom-control-label" for="publishCheck_{{ tweet.id }}">¿Publicar?</label>
         </div>
         

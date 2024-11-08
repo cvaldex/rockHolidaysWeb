@@ -26,6 +26,7 @@ export class TweetShowGrid implements OnInit {
     tweets: any[];
     repeatedWords: string[];
     tweetsLength = 0;
+    publishableRecords = 0;
 
     constructor(public tweet:TweetService, private route: ActivatedRoute, private router: Router, private messageService: MessageService, public dialog: MatDialog, private rwu: RepeatedWordsUtil) {
       // subscribe to home component messages
@@ -35,6 +36,8 @@ export class TweetShowGrid implements OnInit {
           console.log(message);
           this.tweets = message.tweet;
           this.tweetsLength = message.tweet.length;
+
+          this.publishableRecords = this.countPublishableItems(this.tweets);
 
           //llenar los arreglos con palabras repetidas;
           this.repeatedWords = [];
@@ -191,8 +194,41 @@ export class TweetShowGrid implements OnInit {
       return (text.includes('“') || text.includes('”') || text.includes('’'));
     }
 
-    changePublishableState(id: string){
-      console.log("id: " + id);
+    //changePublishableState(id: string, publishableState: boolean){
+    changePublishableState(index: number){
+      //console.log("id: " + id);
+      //console.log("publishableState: " + publishableState);
+      console.log("ID: " + this.tweets[index].id);
+      console.log("is_publishable: " + this.tweets[index].is_publishable);
+
+      var publishableState = {
+        id: this.tweets[index].id.toString() ,
+        newPublishableState: !this.tweets[index].is_publishable
+      }
+
+      this.tweet.updatePublishableState(publishableState).subscribe((result) => {
+        //actualizar el registro para visualizar la tabla
+        this.tweets[index].is_publishable = publishableState.newPublishableState;
+        this.publishableRecords = this.countPublishableItems(this.tweets);
+        
+        //mostrar mensaje de éxito
+        var popupData = {
+          windowMessage : "Actualizar estado de publicación",
+          popupMessage : "Registro actualizado correctamente",
+          actionButtonMessage: "Aceptar",
+          showCancelButton: false
+        };
+
+        let dialogRef = this.dialog.open(GenericPopupComponent, {data: popupData});
+      }, (err) => {
+        console.log("Error actualizando el tweet " + err.message);
+      });
+
+      
+    }
+
+    countPublishableItems(array) {
+      return array.filter(item => item.is_publishable === true).length;
     }
 
     ngOnInit() {}

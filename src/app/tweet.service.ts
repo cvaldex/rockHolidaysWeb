@@ -10,6 +10,7 @@ import { map, catchError, tap } from 'rxjs/operators';
   const updateTweetEndpoint = 'https://jqgrx6olxi.execute-api.us-east-1.amazonaws.com/prod/';
   const deleteTweetEndpoint = 'https://faabpshtoe.execute-api.us-east-1.amazonaws.com/prod/';
   const cloneTweetEndpoint = 'https://faabpshtoe.execute-api.us-east-1.amazonaws.com/prod/';
+  const updatePublishableState = 'https://xoqe752qoh.execute-api.us-east-1.amazonaws.com/prod/';
 
   const httpOptions = {
       headers: new HttpHeaders({
@@ -78,6 +79,15 @@ import { map, catchError, tap } from 'rxjs/operators';
         var id = tweet.id;
         return this.http.put<any>(updateTweetEndpoint + 'tweets', JSON.stringify(tweet), httpOptions).pipe(
             tap((tweet) => console.log(`updated tweet w/ id=${id}`))
+        );
+    }
+
+    updatePublishableState (publishableState): Observable<any> {
+        console.log("TweetService.updatePublishableState" + publishableState);
+        
+        var id = publishableState.id;
+        return this.http.put<any>(updatePublishableState + 'tweets/publishable-state', JSON.stringify(publishableState), httpOptions).pipe(
+            tap((publishableState) => console.log(`updated publishable state w/ id=${id}`))
         );
     }
 
